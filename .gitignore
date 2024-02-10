@@ -4,8 +4,6 @@
 /cs7641_machine_learning/support_materials/readiness
 /cs7641_machine_learning/support_materials/textbook
 /cs7641_machine_learning/support_materials
-cs7641_machine_learning/lectures/week6/assignment1/submission/data1
-cs7641_machine_learning/lectures/week6/assignment1/submission/data2
 *.nb
 cs7641_machine_learning/lectures/week1/decision-trees/ID3 Algorithm for Decision Trees.pdf
 cs7641_machine_learning/lectures/week6/assignment1/7641_Assignment_1.pdf
@@ -48,5 +46,5 @@ cs7641_machine_learning/lectures/week6/assignment1/CS7641 ML - A1 Template.zip
 cs7641_machine_learning/lectures/week9/assignment2/CS7641_ML_Assignment2_Template
 cs7641_machine_learning/lectures/week12/assignment3/CS7641_ML_Assignment3_Template
 cs7641_machine_learning/lectures/week13/assignment4/CS7641_ML_Assignment4_Template
-cs7641_machine_learning/lectures/week6/assignment1/submission/CS7641_ML_Assignment1_Template
+cs7641_machine_learning/lectures/week6/assignment1/CS7641_ML_Assignment1_Template
 cs7641_machine_learning/lectures/week3/ensemble__learning/explaining-adaboost.pdf

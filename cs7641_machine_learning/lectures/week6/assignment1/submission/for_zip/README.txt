@@ -1,1 +1,0 @@
-The technologies used in this project are Python 3.11.7, Pandas 2.1.4, MatPlotLib 3.8.0, Numpy 1.26.3 Seaborn 0.12.2, Scikit-Learn 1.4.0., Scikit-Learn_Intelex 2023.1.1, and openpyxl 3.0.10. The notebook named assignment1.ipynb should run.

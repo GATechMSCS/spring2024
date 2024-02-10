@@ -25,4 +25,4 @@ dependencies:
 # conda info --envs
 
 # to remove environment:
-# conda env remove -n scottschmid_A1
+# conda env remove -n scottschmidl_A1

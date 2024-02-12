@@ -6,9 +6,9 @@
 /cs7641_machine_learning/support_materials
 *.nb
 cs7641_machine_learning/lectures/week1/decision-trees/ID3 Algorithm for Decision Trees.pdf
-cs7641_machine_learning/lectures/week6/assignment1/7641_Assignment_1.pdf
+cs7641_machine_learning/lectures/week6/assignment1/source/7641_Assignment_1.pdf
 cs7641_machine_learning/lectures/week6/assignment1/SL1.pdf
-cs7641_machine_learning/lectures/week9/assignment2/7641_Assignment_2.pdf
+cs7641_machine_learning/lectures/week9/assignment2/CS7641_ML_Assignment2_Template
 cs7641_machine_learning/lectures/week2/regression_classification/978-3-031-38747-0_3.pdf
 cs7641_machine_learning/reading_writing_quiz/Strategies for Academic Papers _ Supplemental Office Hours _ OMSCS 7641.mp4
 cs7641_machine_learning/reading_writing_quiz/ten_simple_rules_reading_papers_carey.pdf
@@ -43,8 +43,9 @@ cs7641_machine_learning/lectures/week12/game_theory/3_3__game_theory.pdf
 cs7641_machine_learning/lectures/week12/game_theory/3_4__game_theory_continued.pdf
 cs7641_machine_learning/lectures/week14/final/CS7641 ML Practice Final Exam.pdf
 cs7641_machine_learning/lectures/week6/assignment1/CS7641 ML - A1 Template.zip
-cs7641_machine_learning/lectures/week9/assignment2/CS7641_ML_Assignment2_Template
+cs7641_machine_learning/lectures/week9/assignment2/submission/CS7641_ML_Assignment2_Template
 cs7641_machine_learning/lectures/week12/assignment3/CS7641_ML_Assignment3_Template
 cs7641_machine_learning/lectures/week13/assignment4/CS7641_ML_Assignment4_Template
 cs7641_machine_learning/lectures/week6/assignment1/CS7641_ML_Assignment1_Template
 cs7641_machine_learning/lectures/week3/ensemble__learning/explaining-adaboost.pdf
+cs7641_machine_learning/lectures/week9/assignment2/source/7641_Assignment_2.pdf

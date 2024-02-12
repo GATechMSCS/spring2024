@@ -1,3 +1,5 @@
+The files to access the code can be found here: https://gatech.box.com/s/e411akvmyfnxf10rnlxitanzf5m67jbk. At this link is a zip file that must be unzipped before access to notebook and data files can be obtained.
+
 The technologies used in this paper:
 1) python 3.11.7
 2) pandas 2.1.4

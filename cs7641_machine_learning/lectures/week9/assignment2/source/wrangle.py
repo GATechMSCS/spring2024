@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-def clean(dataset=None:str):
+def clean(dataset=None:str) -> pd.DataFrame:
     match dataset:
         
         case "cvd":
@@ -23,9 +23,13 @@ def clean(dataset=None:str):
     
     return df_cleaned
 
-def scale(cleaned=None:str):
+def split(cleaned=None):
 
-    match cleaned:
+    return train, test
+
+def scale(split_df=None, train=None:pd.DataFrame, test=None:pd.Series):
+
+    match split_df:
         
         case 'cvd':
             pass
@@ -35,7 +39,11 @@ def scale(cleaned=None:str):
         
     return df_scaled
 
-def final_dataset(scaled=None:str):
+def baseline(y_train=None:pd.Series) -> float:
+
+    return baseline_acc
+    
+def final_dataset(scaled=None:str) -> pd.DataFrame:
 
     match scaled:
         

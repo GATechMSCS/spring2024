@@ -86,32 +86,32 @@ def good_weights(X_train, y_train, X_test, y_test):
         nn[algo]['nn'].fit(X_train, y_train)
 
         # TRAINING
-        print(f'\nPredicting (Training): {algo}')
+        print(f'\nPredicting (TRAINING): {algo}')
         y_train_pred = nn[algo]['nn'].predict(X_train)
 
-        print(f'\nCalculating Recall (Training): {algo}')
+        print(f'\nCalculating Recall (TRAINING): {algo}')
         recall_train = recall_score(y_train, y_train_pred)
 
-        print(f'\nAppending Results (Training): {algo}')
+        print(f'\nAppending Results (TRAINING): {algo}')
         nn[algo]['y_train_pred'] = y_train_pred
         nn[algo]['recall_train'] = recall_train
         
-        print(f"\nThe train recall score: {recall_train}%")
+        print(f"\nRecall Score (TRAINING): {recall_train}%")
 
         # TESTING
-        print(f'\nPredicting (Testing): {algo}')
+        print(f'\nPredicting (TESTING): {algo}')
         y_test_pred = nn[algo]['nn'].predict(X_test)
 
-        print(f'\nCalculting Recall (Testing): {algo}')
+        print(f'\nCalculting Recall (TESTING): {algo}')
         recall_test = recall_score(y_test, y_test_pred)
 
-        print(f'\nAppending Results (Testing): {algo}')
+        print(f'\nAppending Results (TESTING): {algo}')
         nn[algo]['y_test_pred'] = y_test_pred
         nn[algo]['recall_test'] = recall_test
         
-        print(f"\nThe test recall score: {recall_test}%")
+        print(f"\nRecall Score (TESTING): {recall_test}%")
 
-        return nn
+    return nn
 
 def get_op_algo(algo):
     pass

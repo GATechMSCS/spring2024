@@ -134,34 +134,34 @@ def final_dataset(dataset:str) -> pd.DataFrame:
     match dataset:
         
         case 'cvd':
-            print(f'Cleaning {dataset.upper()}...')
+            print(f'{dataset.upper()} Loading and Cleaning...')
             cleaned = clean(dataset=dataset)
-            print(f'{dataset.upper()} Clean...')
+            print(f'{dataset.upper()} Loaded and Cleaned...')
 
-            print(f'\nSplitting {dataset.upper()}...')
+            print(f'\n{dataset.upper()} Splitting...')
             X_train, X_test, y_train, y_test = split(cleaned=cleaned,
                                                      stratify=cleaned['cardio'],
                                                      cols_drop=['cardio'],
                                                      target_col='cardio')
             print(f'{dataset.upper()} Split...')
 
-            print(f'\nScaling {dataset.upper()}...')
+            print(f'\n{dataset.upper()} Scaling...')
             X_train_scaled, X_test_scaled = scale(X_train, X_test)
             print(f'{dataset.upper()} Scaled...')
 
         case 'nf':
-            print(f'Cleaning {dataset.upper()}...')
+            print(f'{dataset.upper()} Loading and Cleaning...')
             cleaned = clean(dataset=dataset)
-            print(f'{dataset.upper()} Clean...')
+            print(f'{dataset.upper()} Loaded and Cleaned...')
 
-            print(f'\nSplitting {dataset.upper()}...')
+            print(f'\n{dataset.upper()} Splitting...')
             X_train, X_test, y_train, y_test = split(cleaned=cleaned,
                                                      stratify=cleaned['food_group'],
                                                      cols_drop=['food_group'],
                                                      target_col='food_group')
             print(f'{dataset.upper()} Split...')
 
-            print(f'\nScaling {dataset.upper()}...')
+            print(f'\n{dataset.upper()} Scaling...')
             X_train_scaled, X_test_scaled = scale(X_train, X_test)
             print(f'{dataset.upper()} Scaled...')
     

@@ -10,6 +10,9 @@ import mlrose_hiive as rh
 # model evaluation
 from sklearn.metrics import recall_score
 
+# timing
+from time import time
+
 np.random.seed(123)
 
 def get_nn_algo(algo):
@@ -87,9 +90,14 @@ def good_weights(X_train, y_train, X_test, y_test):
                       'Gradient Descent'])
 
     print('Running All Algorithms')
+    t0 = time()
     nn = {algo: {'nn': get_nn_algo(algo=algo)} for algo in algos}
-    print('Successfully Run All Algorithms')
+    t1 = time()
+    seconds = t1 - t0
+    minutes = seconds / 60
+    print(f'Compmleted All Algorithms\nTime (Seconds): {seconds}\nTime (Minutes): {minutes} ')
 
+    t2 = time()
     for algo in algos:
         print(f'\nWorking on: {algo}\nFitting: {algo}')
         nn[algo]['nn'].fit(X_train, y_train)
@@ -120,9 +128,12 @@ def good_weights(X_train, y_train, X_test, y_test):
         
         print(f"\nRecall Score (TESTING): {recall_test}%\n")
 
+    t3 = time()
+    loopS = t3 - t2
+    loopM = loops / 60
+    print(f'Completed Fitting and Predicting\nTime (Seconds): {loopS}\n Time (Minutes): {loopM}')
+
     return nn
-
-
 
 def main():
 

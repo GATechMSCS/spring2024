@@ -130,7 +130,7 @@ def good_weights(X_train, y_train, X_test, y_test):
 
     t3 = time()
     loopS = t3 - t2
-    loopM = loops / 60
+    loopM = loopS / 60
     print(f'Completed Fitting and Predicting\nTime (Seconds): {loopS}\n Time (Minutes): {loopM}')
 
     return nn

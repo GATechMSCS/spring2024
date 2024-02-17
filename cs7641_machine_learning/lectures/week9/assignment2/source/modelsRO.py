@@ -12,7 +12,7 @@ from time import time
 
 np.random.seed(123)
 
-def get_op_algo(algo, sps):
+def get_op_algo(algo, seed, prob_size):
 
     match algo:
 

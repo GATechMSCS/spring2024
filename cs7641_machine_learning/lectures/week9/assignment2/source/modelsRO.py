@@ -4,6 +4,9 @@ from wrangle import final_dataset
 # manipulate data
 import numpy as np
 
+# seed and size combos
+from seed_size_combos import algos_sps
+
 # machine learning models
 import mlrose_hiive as rh
 
@@ -12,7 +15,10 @@ from time import time
 
 np.random.seed(123)
 
-def get_op_algo(algo, seed, prob_size):
+def get_op_algo(algo:str, seed:int,
+                lengthFP:int,
+                lengthFF:int,
+                max_item_countKS:int):
 
     match algo:
 
@@ -22,7 +28,7 @@ def get_op_algo(algo, seed, prob_size):
             # Four Peaks
             print(f'Running {algo} FourPeaks')
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
-            op_type_FP = rh.DiscreteOpt(length=4,
+            op_type_FP = rh.DiscreteOpt(length=lengthFP,
                                         fitness_fn=fitness_fnc_FP,
                                         maximize=True,
                                         max_val=2)
@@ -31,13 +37,13 @@ def get_op_algo(algo, seed, prob_size):
                                                              experiment_name='rhc1',
                                                              iteration_list=2**np.arange(10),
                                                              restart_list=[10, 20, 30],
-                                                             seed=123,).run()
+                                                             seed=seed,).run()
             print(f'Completed {algo} FourPeaks')
             
             # FlipFlop
             print(f'Running {algo} FlipFlop')
             fitness_fnc_FF = rh.FlipFlop()
-            op_type_FF = rh.DiscreteOpt(length=4,
+            op_type_FF = rh.DiscreteOpt(length=lengthFF,
                                         fitness_fn=fitness_fnc_FF,
                                         maximize=True,
                                         max_val=2)
@@ -46,12 +52,12 @@ def get_op_algo(algo, seed, prob_size):
                                                              experiment_name='rhc1',
                                                              iteration_list=2**np.arange(10),
                                                              restart_list=[10, 20, 30],
-                                                             seed=123,).run()
+                                                             seed=seed,).run()
             print(f'Completed {algo} FlipFlop')
             
             # Knapsack
             print(f'Running {algo} Knapsack')
-            fitness_fnc_KS = rh.Knapsack(max_item_count=5,
+            fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
             op_type_KS = rh.DiscreteOpt(length=4,
@@ -63,7 +69,7 @@ def get_op_algo(algo, seed, prob_size):
                                                              experiment_name='rhc1',
                                                              iteration_list=2**np.arange(10),
                                                              restart_list=[10, 20, 30],
-                                                             seed=123).run()
+                                                             seed=seed).run()
             print(f'Completed {algo} Knapsack')
             print(f"Completed {algo}")
             
@@ -73,7 +79,7 @@ def get_op_algo(algo, seed, prob_size):
             # Four Peaks
             print(f'Running {algo} FourPeaks')
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
-            op_type_FP = rh.DiscreteOpt(length=4,
+            op_type_FP = rh.DiscreteOpt(length=lengthFP,
                                         fitness_fn=fitness_fnc_FP,
                                         maximize=True,
                                         max_val=2)
@@ -81,7 +87,7 @@ def get_op_algo(algo, seed, prob_size):
             df_run_stats_FP, df_run_curves_FP = rh.SARunner(problem=op_type_FP,
                                                             experiment_name='sa1',
                                                             iteration_list=2**np.arange(10),
-                                                            seed=123,
+                                                            seed=seed,
                                                             temperature_list=[1, 10, 50, 100, 200, 250],
                                                             decay_list=[rh.GeomDecay]).run()
             print(f'Completed {algo} FourPeaks')
@@ -89,7 +95,7 @@ def get_op_algo(algo, seed, prob_size):
             # FlipFlop
             print(f'Running {algo} FlipFlop')
             fitness_fnc_FF = rh.FlipFlop()
-            op_type_FF = rh.DiscreteOpt(length=4,
+            op_type_FF = rh.DiscreteOpt(length=lengthFF,
                                         fitness_fn=fitness_fnc_FF,
                                         maximize=True,
                                         max_val=2)
@@ -97,14 +103,14 @@ def get_op_algo(algo, seed, prob_size):
             df_run_stats_FF, df_run_curves_FF = rh.SARunner(problem=op_type_FF,
                                                             experiment_name='sa1',
                                                             iteration_list=2**np.arange(10),
-                                                            seed=123,
+                                                            seed=seed,
                                                             temperature_list=[1, 10, 50, 100, 200, 250],
                                                             decay_list=[rh.GeomDecay]).run()
             print(f'Completed {algo} FlipFlop')
 
             # Knapsack
             print(f'Running {algo} Knapsack')
-            fitness_fnc_KS = rh.Knapsack(max_item_count=5,
+            fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
             op_type_KS = rh.DiscreteOpt(length=4,
@@ -115,7 +121,7 @@ def get_op_algo(algo, seed, prob_size):
             df_run_stats_KS, df_run_curves_KS = rh.SARunner(problem=op_type_KS,
                                                             experiment_name='sa1',
                                                             iteration_list=2**np.arange(10),
-                                                            seed=123,
+                                                            seed=seed,
                                                             temperature_list=[1, 10, 50, 100, 200, 250],
                                                             decay_list=[rh.GeomDecay]).run()
             print(f'Completed {algo} Knapsack')
@@ -127,14 +133,14 @@ def get_op_algo(algo, seed, prob_size):
             # Four Peaks
             print(f'Running {algo} FourPeaks')
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
-            op_type_FP = rh.DiscreteOpt(length=4,
+            op_type_FP = rh.DiscreteOpt(length=lengthFP,
                                         fitness_fn=fitness_fnc_FP,
                                         maximize=True,
                                         max_val=2)
 
             df_run_stats_FP, df_run_curves_FP = rh.GARunner(problem=op_type_FP,
                                                             experiment_name='GA1',
-                                                            seed=123,
+                                                            seed=seed,
                                                             iteration_list=2**np.arange(10),
                                                             population_sizes=[100, 150, 200],
                                                             mutation_rates=[0.4, 0.5, 0.6]).run()
@@ -143,14 +149,14 @@ def get_op_algo(algo, seed, prob_size):
             # FlipFlop
             print(f'Running {algo} FlipFlop')
             fitness_fnc_FF = rh.FlipFlop()
-            op_type_FF = rh.DiscreteOpt(length=4,
+            op_type_FF = rh.DiscreteOpt(length=lengthFF,
                                         fitness_fn=fitness_fnc_FF,
                                         maximize=True,
                                         max_val=2)
 
             df_run_stats_FF, df_run_curves_FF = rh.GARunner(problem=op_type_FF,
                                                             experiment_name='GA1',
-                                                            seed=123,
+                                                            seed=seed,
                                                             iteration_list=2**np.arange(10),
                                                             population_sizes=[100, 150, 200],
                                                             mutation_rates=[0.4, 0.5, 0.6]).run()
@@ -158,7 +164,7 @@ def get_op_algo(algo, seed, prob_size):
 
             # Knapsack
             print(f'Running {algo} Knapsack')
-            fitness_fnc_KS = rh.Knapsack(max_item_count=5,
+            fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
             op_type_KS = rh.DiscreteOpt(length=4,
@@ -168,7 +174,7 @@ def get_op_algo(algo, seed, prob_size):
 
             df_run_stats_KS, df_run_curves_KS = rh.GARunner(problem=op_type_KS,
                                                             experiment_name='GA1',
-                                                            seed=123,
+                                                            seed=seed,
                                                             iteration_list=2**np.arange(10),
                                                             population_sizes=[100, 150, 200],
                                                             mutation_rates=[0.4, 0.5, 0.6]).run()
@@ -181,14 +187,14 @@ def get_op_algo(algo, seed, prob_size):
             # Four Peaks
             print(f'Running {algo} FourPeaks')
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
-            op_type_FP = rh.DiscreteOpt(length=4, 
+            op_type_FP = rh.DiscreteOpt(length=lengthFP, 
                                         fitness_fn=fitness_fnc_FP,
                                         maximize=True,
                                         max_val=2)
 
             df_run_stats_FP, df_run_curves_FP = rh.MIMICRunner(problem=op_type_FP,
                                                                experiment_name='MIMIC1',
-                                                               seed=123,
+                                                               seed=seed,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
                                                                population_sizes=[150, 200, 250]).run()
@@ -197,14 +203,14 @@ def get_op_algo(algo, seed, prob_size):
             # FlipFlop
             print(f'Running {algo} FlipFlop')
             fitness_fnc_FF = rh.FlipFlop()
-            op_type_FF = rh.DiscreteOpt(length=4, 
+            op_type_FF = rh.DiscreteOpt(length=lengthFF, 
                                         fitness_fn=fitness_fnc_FF,
                                         maximize=True,
                                         max_val=2)
 
             df_run_stats_FF, df_run_curves_FF = rh.MIMICRunner(problem=op_type_FF,
                                                                experiment_name='MIMIC1',
-                                                               seed=123,
+                                                               seed=seed,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
                                                                population_sizes=[150, 200, 250]).run()
@@ -212,7 +218,7 @@ def get_op_algo(algo, seed, prob_size):
 
             # Knapsack
             print(f'Running {algo} Knapsack')
-            fitness_fnc_KS = rh.Knapsack(max_item_count=5,
+            fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
             op_type_KS = rh.DiscreteOpt(length=4, 
@@ -222,48 +228,46 @@ def get_op_algo(algo, seed, prob_size):
 
             df_run_stats_KS, df_run_curves_KS = rh.MIMICRunner(problem=op_type_KS,
                                                                experiment_name='MIMIC1',
-                                                               seed=123,
+                                                               seed=seed,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
                                                                population_sizes=[150, 200, 250]).run()
             print(f'Completed {algo} Knapsack')
             print(f"Completed {algo}")
 
-    # best_state =  {'best_state_FP': best_state_FP,
-    #                'best_state_FF': best_state_FF,
-    #                'best_state_KS': best_state_KS}
+    df_run_stats =  {'df_run_stats_FP': df_run_stats_FP,
+                     'df_run_stats_FF': df_run_stats_FF,
+                     'df_run_stats_KS': df_run_stats_KS}
 
-    # best_fitness = {'best_fitness_FP': best_fitness_FP,
-    #                 'best_fitness_FF': best_fitness_FF,
-    #                 'best_fitness_KS': best_fitness_KS}
-
-    # fitness_curve = {'fitness_curve_FP': fitness_curve_FP,
-    #                  'fitness_curve_FF': fitness_curve_FF,
-    #                  'fitness_curve_KS': fitness_curve_KS}
+    df_run_curves = {'df_run_curves_FP': df_run_curves_FP,
+                     'df_run_curves_FF': df_run_curves_FF,
+                     'df_run_curves_KS': df_run_curves_KS}
     
-    return 1
+    return df_run_stats, df_run_curves
 
 def good_problem():
 
-    seed_pop_size = {'seed': [1, 2, 3],
-                     'lengthFP': [4, 6, 8],
-                     'lengthFF': [4, 6, 8],
-                     'max_item_countKS': [6, 8,10]}
-
-    algos = np.array(['Random Hill Climbing',
-                      'Simulated Annealing',
-                      'Genetic Algorithm',
-                      'MIMIC'])
-
     print('Running All Algorithms')
     t0 = time()
-    opt_prob = {algo: get_op_algo(algo=algo) for algo in algos}
+    for algo, combos in algos_sps.items():
+        for combo, seed_size in combos.items():
+            seed_size_keys = list(seed_size)
+            seed = seed_size[seed_size_keys[0]]
+            lengthFP =seed_size[seed_size_keys[1]]
+            lengthFF = seed_size[seed_size_keys[2]]
+            max_item_countKS = seed_size[seed_size_keys[3]]
+            algos_sps[algo][combo]['results'] = get_op_algo(algo=algo,
+                                                            seed=seed,
+                                                            lengthFP=lengthFP,
+                                                            lengthFF=lengthFF,
+                                                            max_item_countKS=max_item_countKS)
+
     t1 = time()
     seconds = t1 - t0
     minutes = seconds / 60
     print(f'Compmleted All Algorithms\nTime (Seconds): {seconds}\nTime (Minutes): {minutes} ')
 
-    return opt_prob
+    return 1#algos_sps
 
 def main():
 

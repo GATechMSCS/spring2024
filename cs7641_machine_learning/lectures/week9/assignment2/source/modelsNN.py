@@ -100,7 +100,11 @@ def good_weights(X_train, y_train, X_test, y_test):
     t2 = time()
     for algo in algos:
         print(f'\nWorking on: {algo}\nFitting: {algo}')
+        t0 = time()        
         nn[algo]['nn'].fit(X_train, y_train)
+        t1 = time()
+        seconds1 = t1 - t0
+        print(f'Model Fitting Complete. Time: {seconds1} seconds')
 
         # TRAINING
         print(f'\nPredicting (TRAINING): {algo}')
@@ -131,7 +135,7 @@ def good_weights(X_train, y_train, X_test, y_test):
     t3 = time()
     loopS = t3 - t2
     loopM = loopS / 60
-    print(f'Completed Fitting and Predicting\nTime (Seconds): {loopS}\n Time (Minutes): {loopM}')
+    print(f'Completed Fitting and Predicting\nTime (Seconds): {loopS}\nTime (Minutes): {loopM}')
 
     return nn
 

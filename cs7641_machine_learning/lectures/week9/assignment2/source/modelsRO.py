@@ -27,6 +27,7 @@ def get_op_algo(algo:str, seed:int,
 
             # Four Peaks
             print(f'Running {algo} FourPeaks')
+            t0 = time()
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
             op_type_FP = rh.DiscreteOpt(length=lengthFP,
                                         fitness_fn=fitness_fnc_FP,
@@ -38,10 +39,14 @@ def get_op_algo(algo:str, seed:int,
                                                              iteration_list=2**np.arange(10),
                                                              restart_list=[10, 20, 30],
                                                              seed=seed,).run()
-            print(f'Completed {algo} FourPeaks')
+            t1 = time()
+            seconds1 = t1 - t0
+            minutes1 = seconds1 / 60
+            print(f'Completed {algo} FourPeaks. Time: {minutes1} minutes.')
             
             # FlipFlop
             print(f'Running {algo} FlipFlop')
+            t2 = time()
             fitness_fnc_FF = rh.FlipFlop()
             op_type_FF = rh.DiscreteOpt(length=lengthFF,
                                         fitness_fn=fitness_fnc_FF,
@@ -53,10 +58,14 @@ def get_op_algo(algo:str, seed:int,
                                                              iteration_list=2**np.arange(10),
                                                              restart_list=[10, 20, 30],
                                                              seed=seed,).run()
-            print(f'Completed {algo} FlipFlop')
+            t3 = time()
+            seconds2 = t3 - t2
+            minutes2 = seconds2 / 60
+            print(f'Completed {algo} FlipFlop. Time: {minutes2} minutes.')
             
             # Knapsack
             print(f'Running {algo} Knapsack')
+            t5 = time()
             fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
@@ -70,14 +79,18 @@ def get_op_algo(algo:str, seed:int,
                                                              iteration_list=2**np.arange(10),
                                                              restart_list=[10, 20, 30],
                                                              seed=seed).run()
-            print(f'Completed {algo} Knapsack')
-            print(f"Completed {algo}")
+            t6 = time()
+            seconds3 = t6 - t5
+            minutes3 = seconds3 / 60
+            print(f'Completed {algo} Knapsack. Time: {minutes3} minutes.')
+            print(f"Completed {algo}. Time: {minutes3 + minutes2 + minutes1} minutes")
             
         case 'Simulated Annealing':
             print(f"\nRunning {algo}")
 
             # Four Peaks
             print(f'Running {algo} FourPeaks')
+            t0 = time()
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
             op_type_FP = rh.DiscreteOpt(length=lengthFP,
                                         fitness_fn=fitness_fnc_FP,
@@ -90,10 +103,14 @@ def get_op_algo(algo:str, seed:int,
                                                             seed=seed,
                                                             temperature_list=[1, 10, 50, 100, 200, 250],
                                                             decay_list=[rh.GeomDecay]).run()
-            print(f'Completed {algo} FourPeaks')
+            t1 = time()
+            seconds1 = t1 - t0
+            minutes1 = seconds1 / 60
+            print(f'Completed {algo} FourPeaks. Time: {minutes1} minutes.')
 
             # FlipFlop
             print(f'Running {algo} FlipFlop')
+            t2 = time()
             fitness_fnc_FF = rh.FlipFlop()
             op_type_FF = rh.DiscreteOpt(length=lengthFF,
                                         fitness_fn=fitness_fnc_FF,
@@ -106,10 +123,14 @@ def get_op_algo(algo:str, seed:int,
                                                             seed=seed,
                                                             temperature_list=[1, 10, 50, 100, 200, 250],
                                                             decay_list=[rh.GeomDecay]).run()
-            print(f'Completed {algo} FlipFlop')
+            t3 = time()
+            seconds2 = t3 - t2
+            minutes2 = seconds2 / 60
+            print(f'Completed {algo} FlipFlop. Time: {minutes2} minutes.')
 
             # Knapsack
             print(f'Running {algo} Knapsack')
+            t5 = time()
             fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
@@ -124,14 +145,18 @@ def get_op_algo(algo:str, seed:int,
                                                             seed=seed,
                                                             temperature_list=[1, 10, 50, 100, 200, 250],
                                                             decay_list=[rh.GeomDecay]).run()
-            print(f'Completed {algo} Knapsack')
-            print(f"Completed {algo}")
+            t6 = time()
+            seconds3 = t6 - t5
+            minutes3 = seconds3 / 60
+            print(f'Completed {algo} Knapsack. Time: {minutes3} minutes.')
+            print(f"Completed {algo}. Time: {minutes3 + minutes2 + minutes1} minutes")
 
         case 'Genetic Algorithm':
             print(f"\nRunning {algo}")
 
             # Four Peaks
             print(f'Running {algo} FourPeaks')
+            t0 = time()
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
             op_type_FP = rh.DiscreteOpt(length=lengthFP,
                                         fitness_fn=fitness_fnc_FP,
@@ -144,10 +169,14 @@ def get_op_algo(algo:str, seed:int,
                                                             iteration_list=2**np.arange(10),
                                                             population_sizes=[100, 150, 200],
                                                             mutation_rates=[0.4, 0.5, 0.6]).run()
-            print(f'Completed {algo} FourPeaks')
+            t1 = time()
+            seconds1 = t1 - t0
+            minutes1 = seconds1 / 60
+            print(f'Completed {algo} FourPeaks. Time: {minutes1} minutes.')
 
             # FlipFlop
             print(f'Running {algo} FlipFlop')
+            t2 = time()
             fitness_fnc_FF = rh.FlipFlop()
             op_type_FF = rh.DiscreteOpt(length=lengthFF,
                                         fitness_fn=fitness_fnc_FF,
@@ -160,10 +189,14 @@ def get_op_algo(algo:str, seed:int,
                                                             iteration_list=2**np.arange(10),
                                                             population_sizes=[100, 150, 200],
                                                             mutation_rates=[0.4, 0.5, 0.6]).run()
-            print(f'Completed {algo} FlipFlop')
+            t3 = time()
+            seconds2 = t3 - t2
+            minutes2 = seconds2 / 60
+            print(f'Completed {algo} FlipFlop. Time: {minutes2} minutes.')
 
             # Knapsack
             print(f'Running {algo} Knapsack')
+            t5 = time()
             fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
@@ -178,14 +211,18 @@ def get_op_algo(algo:str, seed:int,
                                                             iteration_list=2**np.arange(10),
                                                             population_sizes=[100, 150, 200],
                                                             mutation_rates=[0.4, 0.5, 0.6]).run()
-            print(f'Completed {algo} Knapsack')
-            print(f"Completed {algo}")        
+            t6 = time()
+            seconds3 = t6 - t5
+            minutes3 = seconds3 / 60
+            print(f'Completed {algo} Knapsack. Time: {minutes3} minutes.')
+            print(f"Completed {algo}. Time: {minutes3 + minutes2 + minutes1} minutes")
 
         case 'MIMIC':
             print(f"\nRunning {algo}")
 
             # Four Peaks
             print(f'Running {algo} FourPeaks')
+            t0 = time()
             fitness_fnc_FP = rh.FourPeaks(t_pct=0.1)
             op_type_FP = rh.DiscreteOpt(length=lengthFP, 
                                         fitness_fn=fitness_fnc_FP,
@@ -198,10 +235,14 @@ def get_op_algo(algo:str, seed:int,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
                                                                population_sizes=[150, 200, 250]).run()
-            print(f'Completed {algo} FourPeaks')
+            t1 = time()
+            seconds1 = t1 - t0
+            minutes1 = seconds1 / 60            
+            print(f'Completed {algo} FourPeaks. Time: {minutes1} minutes.')
 
             # FlipFlop
             print(f'Running {algo} FlipFlop')
+            t2 = time()            
             fitness_fnc_FF = rh.FlipFlop()
             op_type_FF = rh.DiscreteOpt(length=lengthFF, 
                                         fitness_fn=fitness_fnc_FF,
@@ -214,10 +255,14 @@ def get_op_algo(algo:str, seed:int,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
                                                                population_sizes=[150, 200, 250]).run()
-            print(f'Completed {algo} FlipFlop')
+            t3 = time()
+            seconds2 = t3 - t2
+            minutes2 = seconds2 / 60
+            print(f'Completed {algo} FlipFlop. Time: {minutes2} minutes.')
 
             # Knapsack
             print(f'Running {algo} Knapsack')
+            t5 = time()            
             fitness_fnc_KS = rh.Knapsack(max_item_count=max_item_countKS,
                                          weights=[0.25, 0.50, 0.75, 1.0],
                                          values=[2.5, 5.0, 7.5, 10])
@@ -231,9 +276,13 @@ def get_op_algo(algo:str, seed:int,
                                                                seed=seed,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
-                                                               population_sizes=[150, 200, 250]).run()
-            print(f'Completed {algo} Knapsack')
-            print(f"Completed {algo}")
+                                                               population_sizes=[150, 200, 250],
+                                                               fast_mimic=True).run()
+            t6 = time()
+            seconds3 = t6 - t5
+            minutes3 = seconds3 / 60
+            print(f'Completed {algo} Knapsack. Time: {minutes3} minutes.')
+            print(f"Completed {algo}. Time: {minutes3 + minutes2 + minutes1} minutes")
 
     df_run_stats =  {'df_run_stats_FP': df_run_stats_FP,
                      'df_run_stats_FF': df_run_stats_FF,
@@ -267,7 +316,7 @@ def good_problem():
     minutes = seconds / 60
     print(f'Compmleted All Algorithms\nTime (Seconds): {seconds}\nTime (Minutes): {minutes} ')
 
-    return 1#algos_sps
+    return algos_sps
 
 def main():
 

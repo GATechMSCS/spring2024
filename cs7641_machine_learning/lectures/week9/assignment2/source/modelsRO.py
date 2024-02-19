@@ -234,7 +234,8 @@ def get_op_algo(algo:str, seed:int,
                                                                seed=seed,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
-                                                               population_sizes=[150, 200, 250]).run()
+                                                               population_sizes=[150, 200, 250],
+                                                               fast_mimic=True).run()
             t1 = time()
             seconds1 = t1 - t0
             minutes1 = seconds1 / 60            
@@ -254,7 +255,8 @@ def get_op_algo(algo:str, seed:int,
                                                                seed=seed,
                                                                iteration_list=2**np.arange(10),
                                                                keep_percent_list=[0.25, 0.5, 0.75],
-                                                               population_sizes=[150, 200, 250]).run()
+                                                               population_sizes=[150, 200, 250],
+                                                               fast_mimic=True).run()
             t3 = time()
             seconds2 = t3 - t2
             minutes2 = seconds2 / 60

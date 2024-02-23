@@ -6,7 +6,7 @@ name: scottschmidl_A1
 
 channels:
   - defaults
-  - conda-forgeconda activate scottschmid_A1
+  - conda-forge
 
 dependencies:
   - python=3.11.7

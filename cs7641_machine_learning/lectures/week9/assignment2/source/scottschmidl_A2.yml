@@ -6,20 +6,16 @@ name: scottschmidl_A1
 
 channels:
   - defaults
-  - conda-forgeconda activate scottschmid_A1
+  - conda-forge
 
 dependencies:
   - python=3.11.7
   - pandas=2.1.4
   - jupyter=1.0.0
-  - ipython=8.15.0
+  - ipython=8.20.0
   - matplotlib=3.8.0
   - numpy=1.26.3
   - seaborn=0.12.2
-  - scikit-learn-intelex=2023.1.1
-  - openpyxl=3.0.10
-  - scikit-learn=1.4.0
-
 
 # to verify environment:
 # conda info --envs

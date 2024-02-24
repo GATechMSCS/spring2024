@@ -8,17 +8,17 @@ nn_algo_tune = \
                                         'learning_rate': 0.05,},
                          'rhc_combo3': {'restarts': 15,
                                         'learning_rate': 0.1,},},
-'Simulated Annealing': {'sa_combo1': {'schedule': rh.GeomDecay(init_temp=1.0,
-                                                                decay=0.99,
-                                                                min_temp=0.001),
+'Simulated Annealing': {'sa_combo1': {'schedule': rh.GeomDecay(init_temp=50.0,
+                                                                decay=0.75,
+                                                                min_temp=1.0).evaluate(4),
                                       'learning_rate': 0.01,},
-                        'sa_combo2': {'schedule': rh.ArithDecay(init_temp=1.0,
-                                                                  decay=0.0001,
-                                                                  min_temp=0.001),
+                        'sa_combo2': {'schedule': rh.ArithDecay(init_temp=50.0,
+                                                                  decay=0.75,
+                                                                  min_temp=0.001).evaluate(4),
                                       'learning_rate': 0.05,},
-                        'sa_combo3': {'schedule': rh.ExpDecay(init_temp=1.0,
-                                                                exp_const=0.005,
-                                                                min_temp=0.001),
+                        'sa_combo3': {'schedule': rh.ExpDecay(init_temp=50.0,
+                                                                exp_const=0.75,
+                                                                min_temp=0.001).evaluate(4),
                                       'learning_rate': 0.1,},},
 'Genetic Algorithm': {'ga_combo1': {'pop_size': 175,
                                     'learning_rate': 0.01,
@@ -46,6 +46,7 @@ def main():
                 case 'Simulated Annealing':
                     dule = hypers[hypers_keys[0]]
                     lr = hypers[hypers_keys[1]]
+                    print(dule)
 
                 case 'Genetic Algorithm':
                     ps = hypers[hypers_keys[0]]

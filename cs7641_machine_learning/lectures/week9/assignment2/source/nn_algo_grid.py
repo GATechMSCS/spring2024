@@ -45,6 +45,7 @@ def main():
 
                 case 'Simulated Annealing':
                     dule = hypers[hypers_keys[0]]
+                    dule_eval = dule.evaluate(4)
                     lr = hypers[hypers_keys[1]]
                     print(dule)
 

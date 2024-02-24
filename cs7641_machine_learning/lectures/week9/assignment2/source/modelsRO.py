@@ -37,7 +37,7 @@ def get_op_algo(algo:str, seed:int,
             df_run_stats_FP, df_run_curves_FP = rh.RHCRunner(problem=op_type_FP,
                                                              experiment_name='rhc1',
                                                              iteration_list=2**np.arange(10),
-                                                             restart_list=[10, 20, 30],
+                                                             restart_list=[5, 10, 15],
                                                              seed=seed,).run()
             t1 = time()
             seconds1 = t1 - t0
@@ -56,7 +56,7 @@ def get_op_algo(algo:str, seed:int,
             df_run_stats_FF, df_run_curves_FF = rh.RHCRunner(problem=op_type_FF,
                                                              experiment_name='rhc1',
                                                              iteration_list=2**np.arange(10),
-                                                             restart_list=[10, 20, 30],
+                                                             restart_list=[5, 10, 15],
                                                              seed=seed,).run()
             t3 = time()
             seconds2 = t3 - t2
@@ -77,7 +77,7 @@ def get_op_algo(algo:str, seed:int,
             df_run_stats_KS, df_run_curves_KS = rh.RHCRunner(problem=op_type_KS,
                                                              experiment_name='rhc1',
                                                              iteration_list=2**np.arange(10),
-                                                             restart_list=[10, 20, 30],
+                                                             restart_list=[5, 10, 15],
                                                              seed=seed).run()
             t6 = time()
             seconds3 = t6 - t5

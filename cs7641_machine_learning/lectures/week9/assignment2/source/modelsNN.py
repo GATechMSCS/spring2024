@@ -4,6 +4,9 @@ from wrangle import final_dataset
 # manipulate data
 import numpy as np
 
+# nn algo grid
+from nn_algo_grid import nn_algo_tune
+
 # machine learning models
 import mlrose_hiive as rh
 
@@ -29,51 +32,55 @@ def get_nn_algo(algo):
         case 'Random Hill Climbing':
             print(f"Running {algo}")
             
-            nn = rh.NeuralNetwork(hidden_nodes=[4],
+            nn = rh.NeuralNetwork(hidden_nodes=[125],
                                   activation='relu',
                                   algorithm='random_hill_climb',
-                                  clip_max=1,
+                                  clip_max=1e+10,
                                   restarts=200,
-                                  max_iters=300,
+                                  max_iters=150,
                                   random_state=123,
-                                  curve=True,)
+                                  curve=True,
+                                  learning_rate=0.01,)
             
         case 'Simulated Annealing':
             print(f"Running {algo}")
             
-            nn = rh.NeuralNetwork(hidden_nodes=[4],
+            nn = rh.NeuralNetwork(hidden_nodes=[125],
                                   activation='relu',
                                   algorithm='simulated_annealing',
-                                  clip_max=1,
+                                  clip_max=1e+10,
                                   schedule=rh.GeomDecay(), 
-                                  max_iters=300,
+                                  max_iters=150,
                                   random_state=123,
-                                  curve = True,)
+                                  curve = True,
+                                  learning_rate=0.01,)
             
         case 'Genetic Algorithm':
             print(f"Running {algo}")
             
-            nn = rh.NeuralNetwork(hidden_nodes=[4], 
+            nn = rh.NeuralNetwork(hidden_nodes=[125], 
                                   activation='relu',
                                   algorithm='genetic_alg', 
-                                  clip_max=1, 
+                                  clip_max=1e+10, 
                                   pop_size=200,
                                   mutation_prob=0.1, 
-                                  max_iters=300, 
+                                  max_iters=150, 
                                   random_state=123, 
-                                  curve=True,)
+                                  curve=True,
+                                  learning_rate=0.01,)
 
         case 'Gradient Descent':
             print(f"Running {algo}")
             
-            nn = rh.NeuralNetwork(hidden_nodes=[4], 
+            nn = rh.NeuralNetwork(hidden_nodes=[125], 
                                   activation='relu',
                                   algorithm='gradient_descent', 
-                                  clip_max=1, 
+                                  clip_max=1e+10, 
                                   pop_size=200, 
-                                  max_iters=300, 
+                                  max_iters=150, 
                                   random_state=123, 
-                                  curve=True,)   
+                                  curve=True,
+                                  learning_rate=0.01,)
             
     return nn
 

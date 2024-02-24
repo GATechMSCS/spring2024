@@ -102,30 +102,30 @@ def good_weights(X_train, y_train, X_test, y_test):
                     rs = hypers[hypers_keys[0]]
                     lr = hypers[hypers_keys[1]]
                     nn_algo_tune[algo][combo]['model'] = get_nn_algo(algo=algo,
-                                                                       hyper1=rs,
-                                                                       hyper2=lr)
+                                                                     hyper1=rs,
+                                                                     hyper2=lr)
 
                 case 'Simulated Annealing':
                     dule = hypers[hypers_keys[0]]
                     lr = hypers[hypers_keys[1]]
                     nn_algo_tune[algo][combo]['model'] = get_nn_algo(algo=algo,
-                                                                       hyper1=dule,
-                                                                       hyper2=lr,)
+                                                                     hyper1=dule,
+                                                                     hyper2=lr,)
 
                 case 'Genetic Algorithm':
                     ps = hypers[hypers_keys[0]]
                     lr = hypers[hypers_keys[1]]
                     mp = hypers[hypers_keys[2]]
                     nn_algo_tune[algo][combo]['model'] = get_nn_algo(algo=algo,
-                                                                       hyper1=ps,
-                                                                       hyper2=lr,
-                                                                       hyper3=mp)
+                                                                     hyper1=ps,
+                                                                     hyper2=lr,
+                                                                     hyper3=mp)
 
                 case 'Gradient Descent':
-                    nn_algo_tune[algo][combo]['model'] = get_nn_algo(algo=algo,
-                                                                       hyper1=None,
-                                                                       hyper2=None,
-                                                                       hyper3=None)
+                    nn_algo_tune[algo][combo]['model'] = get_nn_algo(algo='Gradient Descent',
+                                                                     hyper1=None,
+                                                                     hyper2=None,
+                                                                     hyper3=None)
             t1 = time()
             seconds = t1 - t0
             print(f'Instantiated {algo}\nTime (Seconds): {seconds}')

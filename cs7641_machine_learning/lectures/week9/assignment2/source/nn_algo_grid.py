@@ -29,7 +29,7 @@ nn_algo_tune = \
                       'ga_combo3': {'pop_size': 225,
                                     'learning_rate': 0.1,
                                     'mutation_prob': 0.15,},},
-'Gradient Descent': 'Default'
+'Gradient Descent': {'Default_Combo': {'No Hypers': None}}
 }
 
 def main():

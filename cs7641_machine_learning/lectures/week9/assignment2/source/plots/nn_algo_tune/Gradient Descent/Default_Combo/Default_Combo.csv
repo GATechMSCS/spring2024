@@ -1,0 +1,15 @@
+No Hypers,model,y_train_pred,recall_train,y_test_pred,recall_test
+,"NeuralNetwork(algorithm='gradient_descent', curve=True, hidden_nodes=[125],
+              learning_rate=0.01, max_iters=150, random_state=123)","[[1]
+ [1]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.5398542205501998,"[[0]
+ [0]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.5565912117177098

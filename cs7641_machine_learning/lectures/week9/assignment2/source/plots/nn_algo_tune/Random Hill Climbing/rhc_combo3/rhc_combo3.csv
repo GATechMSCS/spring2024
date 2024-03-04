@@ -1,0 +1,15 @@
+restarts,learning_rate,model,y_train_pred,recall_train,y_test_pred,recall_test
+15,0.1,"NeuralNetwork(curve=True, hidden_nodes=[125], max_iters=150, random_state=123,
+              restarts=15)","[[1]
+ [0]
+ [0]
+ ...
+ [0]
+ [0]
+ [1]]",0.49823653891370795,"[[0]
+ [0]
+ [1]
+ ...
+ [0]
+ [1]
+ [0]]",0.49533954727030627

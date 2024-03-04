@@ -1,0 +1,16 @@
+pop_size,learning_rate,mutation_prob,model,y_train_pred,recall_train,y_test_pred,recall_test
+175,0.01,0.05,"NeuralNetwork(algorithm='genetic_alg', curve=True, hidden_nodes=[125],
+              learning_rate=0.01, max_iters=150, mutation_prob=0.05,
+              pop_size=175, random_state=123)","[[1]
+ [1]
+ [1]
+ ...
+ [0]
+ [1]
+ [1]]",0.6743475193980719,"[[0]
+ [1]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.6684420772303595

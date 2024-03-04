@@ -1,0 +1,16 @@
+schedule,learning_rate,model,y_train_pred,recall_train,y_test_pred,recall_test
+50.0,0.01,"NeuralNetwork(algorithm='simulated_annealing', curve=True, hidden_nodes=[125],
+              learning_rate=0.01, max_iters=150, random_state=123,
+              schedule=GeomDecay(init_temp=50.0, decay=0.75, min_temp=1.0))","[[1]
+ [1]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.5424406301434281,"[[0]
+ [0]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.5645805592543276

@@ -1,0 +1,16 @@
+schedule,learning_rate,model,y_train_pred,recall_train,y_test_pred,recall_test
+50.0,0.1,"NeuralNetwork(algorithm='simulated_annealing', curve=True, hidden_nodes=[125],
+              max_iters=150, random_state=123,
+              schedule=ExpDecay(init_temp=50.0, exp_const=0.75, min_temp=0.001))","[[1]
+ [1]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.5967552316012227,"[[0]
+ [0]
+ [0]
+ ...
+ [0]
+ [1]
+ [1]]",0.62982689747004

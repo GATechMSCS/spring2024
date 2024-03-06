@@ -45,9 +45,9 @@ def main():
 
                 case 'Simulated Annealing':
                     dule = hypers[hypers_keys[0]]
-                    dule_eval = dule.evaluate(4)
+                    dule_eval = dule.evaluate(3)
                     lr = hypers[hypers_keys[1]]
-                    print(dule)
+                    print(dule, dule_eval)
 
                 case 'Genetic Algorithm':
                     ps = hypers[hypers_keys[0]]

@@ -1,13 +1,17 @@
 The files to access the code can be found here: https://gatech.app.box.com/folder/252516898943.
 
 The technologies used in this paper:
-1) python 3.11.7
-2) pandas 2.1.4
-3) jupyter 1.0.0
-4) ipython 8.20.0
-5) matplotlib 3.8.0
-6) numpy 1.26.3 
-7) seaborn 0.12.2
+1) ipython=8.22.2
+2) jupyter=1.0.0
+3) matplotlib=3.8.0
+4) notebook=7.0.8
+5) numpy=1.26.4
+6) openpyxl=3.0.10
+7) pandas=2.1.4
+8) python=3.12.2
+9) scikit-learn=1.4.0
+10) scikit-learn-intelex=2024.1.0
+11) seaborn=0.12.2
 
 Step to replicate results:
 1) If Conda is not already installed, you can download here: https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html

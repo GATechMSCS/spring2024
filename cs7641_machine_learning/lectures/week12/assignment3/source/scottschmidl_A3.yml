@@ -1,0 +1,24 @@
+# type the below two lines into your terminal:
+# conda env create --file scottschmidl_A3.yml
+# conda activate scottschmidl_A3
+
+name: scottschmidl_A3
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - python=3.11.7
+  - pandas=2.1.4
+  - jupyter=1.0.0
+  - ipython=8.20.0
+  - matplotlib=3.8.0
+  - numpy=1.26.3
+  - seaborn=0.12.2
+
+# to verify environment:
+# conda info --envs
+
+# to remove environment:
+# conda env remove -n scottschmidl_A3

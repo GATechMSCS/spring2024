@@ -2,7 +2,7 @@
 # conda env create --file scottschmidl_A2.yml
 # conda activate scottschmidl_A2
 
-name: scottschmidl_A1
+name: scottschmidl_A2
 
 channels:
   - defaults

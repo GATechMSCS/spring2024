@@ -1,4 +1,4 @@
-The files to access the code can be found here: https://gatech.app.box.com/folder/248617736940
+The files to access the code can be found here: https://gatech.app.box.com/folder/248617736940. Before running, it's important to note that the models take over 25 hours to run.
 
 The technologies used in this paper:
 1) python 3.11.7

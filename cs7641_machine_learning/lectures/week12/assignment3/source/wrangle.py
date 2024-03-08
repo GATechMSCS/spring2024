@@ -165,7 +165,7 @@ def final_dataset(dataset:str) -> pd.DataFrame:
             X_train_scaled, X_test_scaled = scale(X_train, X_test)
             print(f'{dataset.upper()} Scaled...')
 
-            baseline(y_train)
+    baseline(y_train)
         
     return X_train_scaled, X_test_scaled, y_train, y_test
 

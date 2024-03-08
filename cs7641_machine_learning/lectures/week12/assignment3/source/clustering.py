@@ -33,8 +33,7 @@ from sklearn.metrics import (rand_score,
                              fowlkes_mallows_score,
                              silhouette_score,
                              calinski_harabasz_score,
-                             davies_bouldin_score,
-                             )
+                             davies_bouldin_score)
 
 from sklearn.metrics.cluster import (contingency_matrix,
                                      pair_confusion_matrix)

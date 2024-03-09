@@ -15,8 +15,9 @@ from sklearn.manifold import (Isomap,
                               )
 
 # model evaluation
-# In Progess
 
+
+np.random.seed(123)
 
 def manifold_learning(df:pd.DataFrame):
     pass

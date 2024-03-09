@@ -14,6 +14,8 @@ import dimensionality_reduction
 # non-linear
 import non_linear
 
+np.random.seed(123)
+
 def put_it_all_together(df:pd.DataFrame()):
     
     steps = range(1, 6, 1)

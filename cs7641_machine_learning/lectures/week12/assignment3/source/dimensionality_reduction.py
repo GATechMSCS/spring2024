@@ -15,7 +15,9 @@ from sklearn.random_projection import (GaussianRandomProjection,
                                        johnson_lindenstrauss_min_dim)
 
 # model evaluation
-# See Below Functions
+
+
+np.random.seed(123)
 
 def pca(df:pd.DataFrame):
     pass

@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 # pca
 from dimensionality_reduction import pca
 
+np.random.seed(123)
+
 def proportion_variance_explained(self, model):
     '''
     CALCULATE THE PROPORATION OF VARIANCE THAT IS EXPLAINED IN PRINCIPAL COMPONENTS

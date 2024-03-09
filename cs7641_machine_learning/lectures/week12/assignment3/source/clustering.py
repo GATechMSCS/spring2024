@@ -38,6 +38,11 @@ from sklearn.metrics import (rand_score,
 from sklearn.metrics.cluster import (contingency_matrix,
                                      pair_confusion_matrix)
 
+def expectation_maximization(df:pd.DataFrame):
+    pass
+
+def cluster_model(df:pd.DataFrame):
+    pass
 
 def main():
     pass

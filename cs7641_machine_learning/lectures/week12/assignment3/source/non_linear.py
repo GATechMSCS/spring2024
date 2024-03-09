@@ -16,6 +16,10 @@ from sklearn.manifold import (Isomap,
 # model evaluation
 # In Progess
 
+
+def manifold_learning(df:pd.DataFrame):
+    pass
+
 def main():
     pass
 

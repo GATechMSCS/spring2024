@@ -147,7 +147,7 @@ def final_dataset(dataset:str) -> pd.DataFrame:
 
             print(f'\n{dataset.upper()} Scaling...')
             X_train_scaled, X_test_scaled = scale(X_train, X_test)
-            print(f'{dataset.upper()} Scaled...\n')
+            print(f'{dataset.upper()} Scaled...')
 
         case 'nf':
             print(f'{dataset.upper()} Loading and Cleaning...')

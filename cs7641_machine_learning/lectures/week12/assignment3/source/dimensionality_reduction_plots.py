@@ -73,17 +73,30 @@ def pca_plot(self, model, list_of_colors, X):
     plt.show()
     return plt
 
+def get_pca_plots(X_train:pd.DataFrame, X_test:pd.DataFrame, fit_pca):
+
+    ## calculations for models
+    explained_variance = fit_pca.explained_variance_
+    list_of_colors = list(range(138))
+
+    prop_var_expl = proportion_variance_explained(explained_variance)
+    screech, var_exp, plot_pca = (scree_plot(fit_pca), 
+                                  variance_explained(prop_var_expl),
+                                  pca_plot(fit_pca, list_of_colors, X))
+
+    return screech, var_exp, plot_pca
+    
 def main():
 
     # CVD
     X_train_scaled_cd, X_test_scaled_cd, y_train_cd, y_test_cd = final_dataset(dataset='cvd')
+    pca(X_train=X_train_scaled_cd, X_test=X_test_scaled_cd)
+    get_pca_plots(X_train=X_train_scaled_cd , X_test=X_test_scaled_cd)
 
-    pca(df=X_train_scaled_cd)
-
-    # NF    
+    # NF
     X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
-
-    pca(df=X_train_scaled_nf)
+    pca(X_train=X_train_scaled_nf, X_test=X_test_scaled_nf)
+    get_pca_plots(X_train= X_train_scaled_nf, X_test=X_test_scaled_nf)
 
 if __name__ == "__main__":
     main()

@@ -174,10 +174,11 @@ def main():
     cvd = final_dataset(dataset='cvd')
 
     nf = final_dataset(dataset='nf')
-
+    print('TEST')
     print(cvd)
     print()
     print(nf)
+    print('TEST')
 
 if __name__ == "__main__":
         main()

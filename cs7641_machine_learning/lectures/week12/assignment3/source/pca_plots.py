@@ -2,6 +2,7 @@
 from wrangle import final_dataset
 
 # manipulate data
+import pandas as pd
 import numpy as np
 
 # visualize data
@@ -71,7 +72,16 @@ def pca_plot(self, model, list_of_colors, X):
     return plt
 
 def main():
-    pass
+
+    # CVD
+    X_train_scaled_cd, X_test_scaled_cd, y_train_cd, y_test_cd = final_dataset(dataset='cvd')
+
+    pca(df=X_train_scaled_cd)
+
+    # NF    
+    X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
+
+    pca(df=X_train_scaled_nf)
 
 if __name__ == "__main__":
     main()

@@ -8,37 +8,18 @@ import numpy as np
 # machine learning models
 # clustering
 from sklearn.cluster import (KMeans,
-                            AffinityPropagation,
                             MeanShift,
-                            SpectralClustering,
                             AgglomerativeClustering,
-                            FeatureAgglomeration,
-                            DBSCAN,
-                            HDBSCAN,
-                            OPTICS,
                             Birch)
 
 # expection maximization
-from sklearn.mixture import (GaussianMixture,
-                             BayesianGaussianMixture)
+from sklearn.mixture import (GaussianMixture)
 
 # model evaluation
-from sklearn.metrics import (rand_score,
-                             adjusted_rand_score,
-                             mutual_info_score,
-                             adjusted_mutual_info_score,
-                             normalized_mutual_info_score,
-                             homogeneity_score,
-                             completeness_score,
-                             v_measure_score,
-                             homogeneity_completeness_v_measure,
-                             fowlkes_mallows_score,
-                             silhouette_score,
-                             calinski_harabasz_score,
-                             davies_bouldin_score)
-
-from sklearn.metrics.cluster import (contingency_matrix,
-                                     pair_confusion_matrix)
+from sklearn.metrics import (rand_score, # lables known
+                             mutual_info_score,# lables known
+                             silhouette_score, # lables not known
+                             calinski_harabasz_score) # lables not known
 
 np.random.seed(123)
 
@@ -59,16 +40,6 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, which='G
             gm.means_
             gm.predict(X_test)
             print('Done with Gaussian Mixture')
-
-        case 'Bayesian':
-            print('Fitting and Predicting Bayesian Gaussian Mixture')
-            bgm = BayesianGaussianMixture(n_components=2,
-                                          random_state=123)
-            bgm.fit(X_train)
-            bgm.means_
-            bgm.predict(X_train)
-            bgm.predict(X_test)
-            print('Done with Bayesian Gaussian Mixture')
     print('Done with Expectation Maximization\n')
     return 1
 
@@ -79,7 +50,7 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
         X_train (pd.DataFrame): _description_
         X_test (pd.DataFrame): _description_
     """
-    print('Fitting Clustering')
+    print('Fitting and Predicting Clustering')
     match which:
         case 'kmeans':
             print('Fitting and Predicting KMeans')
@@ -112,10 +83,30 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
             # predict on test
             y_meanshift_test = clustering.predict(X_test)
             X_test['meanshift_feat_clusters'] = y_meanshift_test
-            print('Done with MeanShift')
-    print('Done with Clustering\n')
+            print('Done with MeanShift')            
+
+        case 'ac':
+            print('Fitting and Predicting Agglomerative Clustering')
             
-    return X_train, X_test
+            # creating the object
+            clustering = AgglomerativeClustering()
+            y_ac_train = clustering.fit_predict(X_train)
+
+            X_train['ac_feat_clusters'] = y_ac_train
+            print('Done with Agglomerative Clustering')
+
+        case 'birch':
+            print('Fitting and Predicting Birch')
+            
+            # creating the object
+            clustering = Birch()
+            y_birch_train = clustering.fit_predict(X_train)
+
+            X_train['birch_feat_clusters'] = y_birch_train
+            print('Done with Birch')
+    print('Done with Clustering')
+            
+    return 1
 
 def main():
 
@@ -126,7 +117,7 @@ def main():
     X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
 
     # expectation maximization
-    for w in ['Gaussian', 'Bayesian']:
+    for w in ['Gaussian']:
         expectation_maximization(X_train=X_train_scaled_cd,
                             X_test=X_test_scaled_cd,
                             which=w)
@@ -136,7 +127,7 @@ def main():
                              which=w)
 
     # clustering
-    for w in ['kmeans', 'meanshift']:
+    for w in ['kmeans', 'meanshift', 'ac', 'birch']:
         cluster_model(X_train=X_train_scaled_cd,
                   X_test=X_test_scaled_cd,
                   which=w)

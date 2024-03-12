@@ -26,13 +26,25 @@ def pca(X_train:pd.DataFrame, X_test:pd.DataFrame, kern='General'):
     match kern:
         case 'General':
             print('Fitting General PCA')
-            model = PCA(svd_solver='auto',
+            transformer = PCA(svd_solver='auto',
                         random_state=123)
-            fit_pca = model.fit(X_train)
+            transformer.fit(X_train)
+            X_train_transformed = transformer.transform(X_train)
+            X_test_transformed = transformer.transform(X_test)
+
+            # create train df
+            train_back2_original = transformer.inverse_transform(X_train_transformed)
+            X_train_transformed = pd.DataFrame(data=train_back2_original,
+                                          columns=X_train.columns)
+
+            # create test df
+            test_back2_original = transformer.inverse_transform(X_test_transformed)
+            X_test_transformed = pd.DataFrame(data=test_back2_original,
+                                              columns=X_test.columns)
             print('Done with General PCA')
     print('Done with PCA')
 
-    return 1        
+    return transformer, X_train_transformed, X_test_transformed     
 
 def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, which='fast'):
     """_summary_
@@ -49,12 +61,23 @@ def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, which='fast'):
             transformer = FastICA(n_components=7,
                           random_state=123,
                           whiten='unit-variance')
-            X_transformed = transformer.fit_transform(X_train)
-            X_transformed.shape
+            transformer.fit(X_train)
+            X_train_transformed = transformer.transform(X_train)
+            X_test_transformed = transformer.transform(X_test)
+
+            # create train df
+            train_back2_original = transformer.inverse_transform(X_train_transformed)
+            X_train_transformed = pd.DataFrame(data=train_back2_original,
+                                          columns=X_train.columns)
+
+            # create test df
+            test_back2_original = transformer.inverse_transform(X_test_transformed)
+            X_test_transformed = pd.DataFrame(data=test_back2_original,
+                                              columns=X_test.columns)
             print('Done with FastICA')
     print('Done with ICA')
 
-    return 1
+    return transformer, X_train_transformed, X_test_transformed
 
 def randomized_projections(X_train:pd.DataFrame, X_test:pd.DataFrame, which='Sparse'):
     """_summary_
@@ -71,12 +94,23 @@ def randomized_projections(X_train:pd.DataFrame, X_test:pd.DataFrame, which='Spa
             transformer = SparseRandomProjection(n_components=3,
                                                  eps=0.9,
                                                  random_state=123)
-            X_new = transformer.fit_transform(X_train)
-            X_new.shape
+            transformer.fit(X_train)
+            X_train_transformed = transformer.transform(X_train)
+            X_test_transformed = transformer.transform(X_test)
+            
+            # create train df
+            train_back2_original = transformer.inverse_transform(X_train_transformed)
+            X_train_transformed = pd.DataFrame(data=train_back2_original,
+                                          columns=X_train.columns)
+
+            # create test df
+            test_back2_original = transformer.inverse_transform(X_test_transformed)
+            X_test_transformed = pd.DataFrame(data=test_back2_original,
+                                              columns=X_test.columns)
             print('Done with Sparse Random Projection')
     print('Done with Randomized Projections')
 
-    return 1
+    return transformer, X_train_transformed, X_test_transformed
 
 def manifold_learning(X_train:pd.DataFrame, X_test:pd.DataFrame, which='hem'):
     """_summary_
@@ -90,19 +124,29 @@ def manifold_learning(X_train:pd.DataFrame, X_test:pd.DataFrame, which='hem'):
     match which:
         case 'hem':
             print('Fitting and Transforming with Locally Linear Embedding: Heissan Mapping')
-            embedding = LocallyLinearEmbedding(n_neighbors=20,
+            transformer = LocallyLinearEmbedding(n_neighbors=20,
                                                n_components=2,
                                                reg=1e-3,
                                                eigen_solver='dense',
                                                method='hessian',
                                                random_state=123,
                                                n_jobs=-1)
-            X_transformed = embedding.fit_transform(X_train)
-            X_transformed.shape
+            transformer.fit(X_train)
+            X_train_transformed = transformer.transform(X_train)
+            X_test_transformed = transformer.transform(X_test)
+
+            # get components and create train df
+            cols = [f'Component{i}' for i in range(transformer.embedding_.shape[1])]
+            X_train_transformed = pd.DataFrame(data=X_train_transformed,
+                                          columns=cols)
+
+            # create test df
+            X_test_transformed = pd.DataFrame(data=X_test_transformed,
+                                              columns=cols)
             print('Done with Locally Linear Embedding: Heissan Mapping')
     print('Done with Manifold Learning')
 
-    return 1
+    return transformer, X_train_transformed, X_test_transformed
 
 def main():
 

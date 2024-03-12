@@ -35,13 +35,15 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, which='G
     match which:
         case 'Gaussian':
             print('Fitting and Predicting Gaussian Mixture')
-            gm = GaussianMixture(n_components=2, random_state=0)
+            gm = GaussianMixture(n_components=2, random_state=123)
             gm.fit(X_train)
-            gm.means_
-            gm.predict(X_test)
+
+            # predict on train
+            y_gm_train = gm.predict(X_train)
+            X_train['mixture_clusters'] = y_gm_train
             print('Done with Gaussian Mixture')
     print('Done with Expectation Maximization\n')
-    return 1
+    return gm, X_train
 
 def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
     """_summary_
@@ -55,18 +57,15 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
         case 'kmeans':
             print('Fitting and Predicting KMeans')
             # creating the object
-            clustering = KMeans(n_clusters=8, max_iter=500)
+            clustering = KMeans(n_clusters=8, max_iter=500, random_state=123)
 
             # fitting the object
             clustering.fit(X_train)
 
             # predict on train
             y_kmeans_train = clustering.predict(X_train)
-            X_train['kmeans_feat_clusters'] = y_kmeans_train
+            X_train['feat_clusters'] = y_kmeans_train
 
-            #predict on test
-            y_kmeans_test = clustering.predict(X_test)
-            X_test['kmeans_feat_clusters'] = y_kmeans_test
             print('Done with KMeans')
 
         case 'meanshift':
@@ -78,11 +77,7 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
 
             # predict on train
             y_meanshift_train = clustering.predict(X_train)
-            X_train['meanshift_feat_clusters'] = y_meanshift_train
-
-            # predict on test
-            y_meanshift_test = clustering.predict(X_test)
-            X_test['meanshift_feat_clusters'] = y_meanshift_test
+            X_train['feat_clusters'] = y_meanshift_train
             print('Done with MeanShift')            
 
         case 'ac':
@@ -90,9 +85,10 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
             
             # creating the object
             clustering = AgglomerativeClustering()
-            y_ac_train = clustering.fit_predict(X_train)
+            clustering.fit(X_train)
 
-            X_train['ac_feat_clusters'] = y_ac_train
+            y_ac_train = clustering.predict(X_train)
+            X_train['feat_clusters'] = y_ac_train
             print('Done with Agglomerative Clustering')
 
         case 'birch':
@@ -100,13 +96,14 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
             
             # creating the object
             clustering = Birch()
-            y_birch_train = clustering.fit_predict(X_train)
+            clustering.fit(X_train)
 
-            X_train['birch_feat_clusters'] = y_birch_train
+            y_birch_train = clustering.predict(X_train)
+            X_train['feat_clusters'] = y_birch_train
             print('Done with Birch')
     print('Done with Clustering')
             
-    return 1
+    return clustering, X_train
 
 def main():
 

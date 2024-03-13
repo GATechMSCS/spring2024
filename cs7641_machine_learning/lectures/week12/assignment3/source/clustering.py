@@ -35,15 +35,24 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, which='G
     match which:
         case 'Gaussian':
             print('Fitting and Predicting Gaussian Mixture')
-            gm = GaussianMixture(n_components=2, random_state=123)
-            gm.fit(X_train)
 
-            # predict on train
-            y_gm_train = gm.predict(X_train)
-            X_train['mixture_clusters'] = y_gm_train
+            # creating the train object
+            gm_train = GaussianMixture(n_components=2,
+                                       random_state=123).fit_predict(X_train)
+
+            # get train labels
+            X_train['mixture_clusters'] = gm_train
+
+            # creating the train object
+            gm_test = GaussianMixture(n_components=2,
+                                       random_state=123).fit_predict(X_test)
+
+            # get test labels
+            X_test['mixture_clusters'] = gm_test
+            
             print('Done with Gaussian Mixture')
     print('Done with Expectation Maximization\n')
-    return gm, X_train
+    return gm_train, X_train, gm_test, X_test
 
 def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
     """_summary_
@@ -56,54 +65,82 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
     match which:
         case 'kmeans':
             print('Fitting and Predicting KMeans')
-            # creating the object
-            clustering = KMeans(n_clusters=8, max_iter=500, random_state=123)
+            
+            # creating the train object
+            clustering_train = KMeans(n_clusters=8,
+                                      max_iter=500,
+                                      random_state=123).fit(X_train)
 
-            # fitting the object
-            clustering.fit(X_train)
+            # get train labels
+            X_train['feat_clusters'] = clustering_train.labels_
 
-            # predict on train
-            y_kmeans_train = clustering.predict(X_train)
-            X_train['feat_clusters'] = y_kmeans_train
+            # creating the test object
+            clustering_test = KMeans(n_clusters=8,
+                                      max_iter=500,
+                                      random_state=123).fit(X_test)
 
+            # get test labels
+            X_test['feat_clusters'] = clustering_test.labels_
+            
             print('Done with KMeans')
 
         case 'meanshift':
             print('Fitting and Predicting MeanShift')
             
-            # creating the object
-            clustering = MeanShift(bandwidth=2, max_iter=500, n_jobs=-1)
-            clustering.fit(X_train)
+            # creating the train object
+            clustering_train = MeanShift(bandwidth=2,
+                                         max_iter=500,
+                                         n_jobs=-1).fit_predict(X_train)
 
-            # predict on train
-            y_meanshift_train = clustering.predict(X_train)
-            X_train['feat_clusters'] = y_meanshift_train
+            # get train labels
+            X_train['feat_clusters'] = clustering_train
+
+            # creating the test object
+            clustering_test = MeanShift(bandwidth=2,
+                                         max_iter=500,
+                                         n_jobs=-1).fit_predict(X_test)
+
+            # get test labels
+            X_test['feat_clusters'] = clustering_test
+            
             print('Done with MeanShift')            
 
         case 'ac':
             print('Fitting and Predicting Agglomerative Clustering')
             
-            # creating the object
-            clustering = AgglomerativeClustering()
-            clustering.fit(X_train)
+            # creating the train object
+            clustering_train = AgglomerativeClustering().fit_predict(X_train)
 
-            y_ac_train = clustering.predict(X_train)
-            X_train['feat_clusters'] = y_ac_train
+            # get train labels
+            X_train['feat_clusters'] = clustering_train
+
+            # creating the test object
+            clustering_test = AgglomerativeClustering().fit_predict(X_test)
+
+            # get test labels
+            X_test['feat_clusters'] = clustering_test
+            
             print('Done with Agglomerative Clustering')
 
         case 'birch':
             print('Fitting and Predicting Birch')
             
-            # creating the object
-            clustering = Birch()
-            clustering.fit(X_train)
+            # creating the train object
+            clustering_train = Birch().fit_predict(X_train)
 
-            y_birch_train = clustering.predict(X_train)
-            X_train['feat_clusters'] = y_birch_train
+            # get train labels
+            X_train['feat_clusters'] = clustering_train
+
+            # creating the test object
+            clustering_test = Birch().fit_predict(X_test)
+
+            # get test labels
+            X_test['feat_clusters'] = clustering_test
+            
             print('Done with Birch')
     print('Done with Clustering')
             
-    return clustering, X_train
+    return clustering_train, X_train, clustering_test, X_test
 
 def main():
 

@@ -23,7 +23,7 @@ def put_it_all_together(X_train:pd.DataFrame,
                         dset:str):
 
     results = {dset: {'step1': {'gm': None,
-                                  'kmeans': None},
+                                'kmeans': None},
                       'step2': {'pca': None,
                                 'ica': None,
                                 'sparseRP': None,
@@ -40,7 +40,8 @@ def put_it_all_together(X_train:pd.DataFrame,
                                 'ica': None,
                                 'sparseRP': None,
                                 'manifold': None},
-                      'step5': {}}}
+                      'step5': {'gm': None,
+                                'kmean': None}}}
 
     steps = range(1, 6, 1)
 
@@ -50,16 +51,19 @@ def put_it_all_together(X_train:pd.DataFrame,
         match step:
             case 1:
                 print(f'Step: {step}')
+                
                 X_train_copy1 = X_train.copy()
                 X_test_copy1 = X_test.copy()
                 gm = cl.expectation_maximization(X_train=X_train_copy1, X_test=X_test_copy1, which='Gaussian')
                 clustering = cl.cluster_model(X_train=X_train_copy1, X_test=X_test_copy1, which='kmeans')
                 results[dset]['step1']['gm'] = gm
                 results[dset]['step1']['kmeans'] = clustering
+                
                 print(f'Step: {step} Complete\n')
 
             case 2:
                 print(f'Step: {step}')
+            
                 gpca = dr.pca(X_train=X_train, X_test=X_test)
                 fica = dr.ica(X_train=X_train, X_test=X_test)
                 srp= dr.randomized_projections(X_train=X_train, X_test=X_test)
@@ -68,10 +72,12 @@ def put_it_all_together(X_train:pd.DataFrame,
                 results[dset]['step2']['ica'] = fica
                 results[dset]['step2']['sparseRP'] = srp
                 results[dset]['step2']['manifold'] = lleh
+            
                 print(f'Step: {step} Complete\n')
 
             case 3:
                 print(f'Step: {step}')
+            
                 # DR
                 pca_train_copy = results[dset]['step2']['pca'][1].copy()
                 ica_train_copy = results[dset]['step2']['ica'][1].copy()
@@ -105,13 +111,15 @@ def put_it_all_together(X_train:pd.DataFrame,
                 results[dset]['step3']['ica']['kmeans'] = clustering_ica
                 results[dset]['step3']['sparseRP']['kmeans'] = clustering_srp
                 results[dset]['step3']['manifold']['kmeans'] = clustering_maniL
+            
                 print(f'Step: {step} Complete\n')
 
             
             case 4:
                 if dset == 'nf':
                     print(f'Step: {step} ({dset} only)')
-                    # DR
+            
+                    # get dr dataframes
                     pca_train = results[dset]['step2']['pca'][1]
                     pca_test = results[dset]['step2']['pca'][2]
                     ica_train = results[dset]['step2']['ica'][1]
@@ -122,53 +130,93 @@ def put_it_all_together(X_train:pd.DataFrame,
                     manifold_test = results[dset]['step2']['manifold'][2]
 
                     # pca
-                    cvd_nn_pca = MLPClassifier(random_state=123,
+                    print('\nFitting and Predicting PCA NN')
+                    nf_nn_pca = MLPClassifier(random_state=123,
                                             learning_rate_init=0.01,
                                             batch_size=65,
                                             hidden_layer_sizes=125,
                                             max_iter=200).fit(pca_train, y_train)
-                    cvd_nn_pca_pred = cvd_nn_pca.predict(pca_test)
+                    
+                    nf_nn_pca_pred = nf_nn_pca.predict(pca_test)
+                    print('PCA NN Complete')
 
                     # ica
-                    cvd_nn_ica = MLPClassifier(random_state=123,
+                    print('\nFitting and Predicting ICA NN')
+                    nf_nn_ica = MLPClassifier(random_state=123,
                                             learning_rate_init=0.01,
                                             batch_size=65,
                                             hidden_layer_sizes=125,
                                             max_iter=200).fit(ica_train, y_train)
-                    cvd_nn_ica_pred = cvd_nn_ica.predict(ica_test)
+                    
+                    nf_nn_ica_pred = nf_nn_ica.predict(ica_test)
+                    print('ICA NN Complete')
 
                     # sparse RP
-                    cvd_nn_sparseRP = MLPClassifier(random_state=123,
+                    print('\nFitting and Predicting Sparse RP NN')
+                    nf_nn_sparseRP = MLPClassifier(random_state=123,
                                             learning_rate_init=0.01,
                                             batch_size=65,
                                             hidden_layer_sizes=125,
                                             max_iter=200).fit(sparseRP_train, y_train)
-                    cvd_nn_sparseRP_pred = cvd_nn_sparseRP.predict(sparseRP_test)
+                    
+                    nf_nn_sparseRP_pred = nf_nn_sparseRP.predict(sparseRP_test)
+                    print('Sparse RP NN Complete')
 
                     # manifold
-                    cvd_nn_manifold = MLPClassifier(random_state=123,
+                    print('\nFitting and Predicting Maniforld Learning NN')
+                    nf_nn_manifold = MLPClassifier(random_state=123,
                                             learning_rate_init=0.01,
                                             batch_size=65,
                                             hidden_layer_sizes=125,
                                             max_iter=200).fit(manifold_train, y_train)
-                    cvd_nn_manifold_pred = cvd_nn_manifold.predict(manifold_test)
+                    
+                    nf_nn_manifold_pred = nf_nn_manifold.predict(manifold_test)
+                    print('Maniforld Learning NN Complete')
 
-                    results[dset]['step4']['pca'] = cvd_nn_pca_pred
-                    results[dset]['step4']['ica'] = cvd_nn_ica_pred
-                    results[dset]['step4']['sparseRP'] = cvd_nn_sparseRP_pred
-                    results[dset]['step4']['manifold'] = cvd_nn_manifold_pred
+                    results[dset]['step4']['pca'] = nf_nn_pca_pred
+                    results[dset]['step4']['ica'] = nf_nn_ica_pred
+                    results[dset]['step4']['sparseRP'] = nf_nn_sparseRP_pred
+                    results[dset]['step4']['manifold'] = nf_nn_manifold_pred
+            
                     print(f'Step: {step} Complete\n')
 
             case 5:
-                print(f'Step: {step}')
-                # TODO: report on CL and NN
-                cvd_model = MLPClassifier(random_state=123,
-                                          learning_rate_init=0.01,
-                                          batch_size=65,
-                                          hidden_layer_sizes=125,
-                                          max_iter=200)
-                #results[dset]['step5'] = 
-                print(f'Step: {step} Complete\n')
+                if dset == 'nf':
+                    print(f'Step: {step} ({dset}) only')
+
+                    # get cl dataframes
+                    X_train_gm = results[dset]['step1']['gm'][1]
+                    X_train_cl = results[dset]['step1']['kmeans'][1]
+
+                    X_test_gm = results[dset]['step1']['gm'][3]
+                    X_test_cl = results[dset]['step1']['kmeans'][3]
+
+                    # gm
+                    print('Fitting and Predicting GM NN')
+                    nf_nn_gm = MLPClassifier(random_state=123,
+                                            learning_rate_init=0.01,
+                                            batch_size=65,
+                                            hidden_layer_sizes=125,
+                                            max_iter=200).fit(X_train_gm, y_train)
+
+                    nf_nn_gm_pred = nf_nn_gm.predict(X_test_gm)
+                    print('GM NN Complete')
+
+                    # cl
+                    print('Fitting and Predicting Clustering NN')
+                    nf_nn_cl = MLPClassifier(random_state=123,
+                                            learning_rate_init=0.01,
+                                            batch_size=65,
+                                            hidden_layer_sizes=125,
+                                            max_iter=200).fit(X_train_cl, y_train)
+
+                    nf_nn_cl_pred = nf_nn_cl.predict(X_test_cl)
+                    print('Clustering NN Complete')
+                    
+                    results[dset]['step5']['gm'] = nf_nn_gm_pred
+                    results[dset]['step5']['kmeans'] = nf_nn_cl_pred
+                    
+                    print(f'Step: {step} Complete\n')
 
     print('Completed All Steps')
 

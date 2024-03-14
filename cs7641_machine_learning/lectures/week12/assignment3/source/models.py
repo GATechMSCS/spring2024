@@ -38,18 +38,11 @@ def put_it_all_together(X_train:pd.DataFrame,
                                 'kmean': None}}}
 
     param_grid = {
-    'hidden_layer_sizes': [(50,), (100,), (150,)],  # size of hidden layers
-    'activation': ['relu', 'tanh', 'sigmoid'],  # activation functions
-    'solver': ['adam'],  # solver for weight optimization
+    'hidden_layer_sizes': [(50,), (100,), (150,), (250,)],  # size of hidden layers
+    'activation': ['relu', 'sigmoid'],  # activation functions
     'alpha': [0.0001, 0.001, 0.01],  # L2 penalty (regularization term)
-    'learning_rate': ['constant', 'adaptive'],  # learning rate schedule
     'learning_rate_init': [0.001, 0.01, 0.1],  # initial learning rate
-    'max_iter': [200, 500, 1000],  # maximum number of iterations
-    'batch_size': [32, 64, 128],  # size of minibatches for stochastic optimizers
-    'tol': [1e-3, 1e-4, 1e-5],  # tolerance for stopping criteria
-    'early_stopping': [True, False],  # whether to use early stopping to prevent overfitting
-    'validation_fraction': [0.1, 0.2, 0.3],  # fraction of training data to use for validation
-    'n_iter_no_change': [5, 10, 20],}  # maximum number of epochs with no improvement to wait before stopping
+    'max_iter': [200, 350, 500],}  # maximum number of iterations
 
     print('\nRunning All Steps')
 

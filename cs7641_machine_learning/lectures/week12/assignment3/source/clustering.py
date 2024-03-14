@@ -38,17 +38,17 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, which='G
 
             # creating the train object
             gm_train = GaussianMixture(n_components=2,
-                                       random_state=123).fit_predict(X_train)
+                                       random_state=123).fit(X_train)
 
             # get train labels
-            X_train['mixture_clusters'] = gm_train
+            X_train['mixture_clusters'] = gm_train.predict(X_train)
 
             # creating the train object
             gm_test = GaussianMixture(n_components=2,
-                                       random_state=123).fit_predict(X_test)
+                                       random_state=123).fit(X_test)
 
             # get test labels
-            X_test['mixture_clusters'] = gm_test
+            X_test['mixture_clusters'] = gm_test.predict(X_test)
             
             print('Done with Gaussian Mixture')
     print('Done with Expectation Maximization\n')
@@ -90,18 +90,18 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
             # creating the train object
             clustering_train = MeanShift(bandwidth=2,
                                          max_iter=500,
-                                         n_jobs=-1).fit_predict(X_train)
+                                         n_jobs=-1).fit(X_train)
 
             # get train labels
-            X_train['feat_clusters'] = clustering_train
+            X_train['feat_clusters'] = clustering_train.labels_
 
             # creating the test object
             clustering_test = MeanShift(bandwidth=2,
                                          max_iter=500,
-                                         n_jobs=-1).fit_predict(X_test)
+                                         n_jobs=-1).fit(X_test)
 
             # get test labels
-            X_test['feat_clusters'] = clustering_test
+            X_test['feat_clusters'] = clustering_test.labels_
             
             print('Done with MeanShift')            
 
@@ -109,16 +109,16 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
             print('Fitting and Predicting Agglomerative Clustering')
             
             # creating the train object
-            clustering_train = AgglomerativeClustering().fit_predict(X_train)
+            clustering_train = AgglomerativeClustering().fit(X_train)
 
             # get train labels
-            X_train['feat_clusters'] = clustering_train
+            X_train['feat_clusters'] = clustering_train.labels_
 
             # creating the test object
-            clustering_test = AgglomerativeClustering().fit_predict(X_test)
+            clustering_test = AgglomerativeClustering().fit(X_test)
 
             # get test labels
-            X_test['feat_clusters'] = clustering_test
+            X_test['feat_clusters'] = clustering_test.labels_
             
             print('Done with Agglomerative Clustering')
 
@@ -126,16 +126,16 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, which='kmeans'):
             print('Fitting and Predicting Birch')
             
             # creating the train object
-            clustering_train = Birch().fit_predict(X_train)
+            clustering_train = Birch().fit(X_train)
 
             # get train labels
-            X_train['feat_clusters'] = clustering_train
+            X_train['feat_clusters'] = clustering_train.predict(X_train)
 
             # creating the test object
-            clustering_test = Birch().fit_predict(X_test)
+            clustering_test = Birch().fit(X_test)
 
             # get test labels
-            X_test['feat_clusters'] = clustering_test
+            X_test['feat_clusters'] = clustering_test.predict(X_test)
             
             print('Done with Birch')
     print('Done with Clustering')

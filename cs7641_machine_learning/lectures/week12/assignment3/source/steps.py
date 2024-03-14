@@ -47,11 +47,13 @@ def step2(X_train:pd.DataFrame,
                     y_test,
                     dset,
                     results)
-    print(f'Step: 2')    
-    gpca = dr.pca(X_train=X_train, X_test=X_test)
-    fica = dr.ica(X_train=X_train, X_test=X_test)
-    srp= dr.randomized_projections(X_train=X_train, X_test=X_test)
-    lleh = dr.manifold_learning(X_train=X_train, X_test=X_test)
+    print(f'Step: 2')
+    X_train_copy2 = X_train.copy()
+    X_test_copy2 = X_test.copy()
+    gpca = dr.pca(X_train=X_train_copy2, X_test=X_test_copy2)
+    fica = dr.ica(X_train=X_train_copy2, X_test=X_test_copy2)
+    srp= dr.randomized_projections(X_train=X_train_copy2, X_test=X_test_copy2)
+    lleh = dr.manifold_learning(X_train=X_train_copy2, X_test=X_test_copy2)
     results[dset]['step2']['pca'] = gpca
     results[dset]['step2']['ica'] = fica
     results[dset]['step2']['sparseRP'] = srp
@@ -76,9 +78,13 @@ def step3(X_train:pd.DataFrame,
     print(f'Step: 3')
     # DR
     pca_train_copy = results[dset]['step2']['pca'][1].copy()
+    pca_test_copy = results[dset]['step2']['pca'][2].copy()
     ica_train_copy = results[dset]['step2']['ica'][1].copy()
+    ica_test_copy = results[dset]['step2']['ica'][2].copy()
     sparseRP_train_copy = results[dset]['step2']['sparseRP'][1].copy()
+    sparseRP_test_copy = results[dset]['step2']['sparseRP'][2].copy()
     manifold_train_copy = results[dset]['step2']['manifold'][1].copy()
+    manifold_test_copy = results[dset]['step2']['manifold'][2].copy()
     
     # pca
     gm_pca = cl.expectation_maximization(X_train=pca_train_copy, X_test=X_test, which='Gaussian')

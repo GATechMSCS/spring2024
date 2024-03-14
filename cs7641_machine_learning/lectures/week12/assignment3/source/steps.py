@@ -41,14 +41,13 @@ def step2(X_train:pd.DataFrame,
             dset:str,
             results):
 
-    print(f'Step: 2')
     results = step1(X_train,
                     y_train,
                     X_test,
                     y_test,
                     dset,
                     results)
-    
+    print(f'Step: 2')    
     gpca = dr.pca(X_train=X_train, X_test=X_test)
     fica = dr.ica(X_train=X_train, X_test=X_test)
     srp= dr.randomized_projections(X_train=X_train, X_test=X_test)
@@ -68,13 +67,13 @@ def step3(X_train:pd.DataFrame,
             dset:str,
             results):
 
-    print(f'Step: 3')
     results = step2(X_train,
                     y_train,
                     X_test,
                     y_test,
                     dset,
                     results,)
+    print(f'Step: 3')
     # DR
     pca_train_copy = results[dset]['step2']['pca'][1].copy()
     ica_train_copy = results[dset]['step2']['ica'][1].copy()
@@ -125,8 +124,7 @@ def step4(X_train:pd.DataFrame,
                         X_test,
                         y_test,
                         dset,
-                        results,
-                        param_grid)
+                        results)
 
     if dset == 'cvd':
         print(f'Step: 4 (cvd only)')

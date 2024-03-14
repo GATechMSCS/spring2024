@@ -1,3 +1,14 @@
+# load and preprocess
+from wrangle import final_dataset
+
+# manipulate data
+import pandas as pd
+import numpy as np
+
+# Baseline Model
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import GridSearchCV
+
 def gridsearch_nn(X_train,
                     y_train,
                     X_test,

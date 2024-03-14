@@ -37,7 +37,8 @@ def main():
     'activation': ['relu', 'sigmoid'],  # activation functions
     'alpha': [0.0001, 0.001, 0.01],  # L2 penalty (regularization term)
     'learning_rate_init': [0.001, 0.01, 0.1],  # initial learning rate
-    'max_iter': [200, 350, 500],}  # maximum number of iterations
+    'max_iter': [200, 350, 500],  # maximum number of iterations
+    'batch_size': [150, 200, 250],} # size of minibatches for stochastic optimizers
 
     # CVD 
     X_train_scaled_cd, X_test_scaled_cd, y_train_cd, y_test_cd = final_dataset(dataset='cvd')

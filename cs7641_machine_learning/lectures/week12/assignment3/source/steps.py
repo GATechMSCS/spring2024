@@ -194,7 +194,7 @@ def step4(X_train:pd.DataFrame,
 
         results[dset]['step4']['pca'] = grid_search_pca_best
         results[dset]['step4']['ica'] = grid_search_ica_best
-        results[dset]['step4']['sparseRP'] = grid_search_RP_best
+        results[dset]['step4']['sparseRP'] = grid_search_rp_best
         results[dset]['step4']['manifold'] = grid_search_manifold_best
         print(f'Step: 4 Complete\n')
     
@@ -271,7 +271,7 @@ def main():
 
     param_grid = {
         'hidden_layer_sizes': [(50,), (100,), (150,)],  # size of hidden layers
-        'activation': ['relu', 'tanh', 'sigmoid'],  # activation functions
+        'activation': ['relu', 'tanh', 'logistic'],  # activation functions
         'solver': ['adam'],  # solver for weight optimization
         'alpha': [0.0001, 0.001, 0.01],  # L2 penalty (regularization term)
         'learning_rate': ['constant', 'adaptive'],  # learning rate schedule

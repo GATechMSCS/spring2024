@@ -39,10 +39,11 @@ def put_it_all_together(X_train:pd.DataFrame,
 
     param_grid = {
     'hidden_layer_sizes': [(50,), (100,), (150,), (250,)],  # size of hidden layers
-    'activation': ['relu', 'sigmoid'],  # activation functions
+    'activation': ['relu', 'logistic'],  # activation functions
     'alpha': [0.0001, 0.001, 0.01],  # L2 penalty (regularization term)
     'learning_rate_init': [0.001, 0.01, 0.1],  # initial learning rate
-    'max_iter': [200, 350, 500],}  # maximum number of iterations
+    'max_iter': [200, 350, 500], # maximum number of iterations
+    'batch_size': [150, 200, 250],} # size of minibatches for stochastic optimizers
 
     print('\nRunning All Steps')
 

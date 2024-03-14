@@ -58,7 +58,7 @@ def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, which='fast'):
     match which:
         case 'fast':
             print('Fitting and Transforming FastICA')
-            transformer = FastICA(n_components=7,
+            transformer = FastICA(n_components=5,
                           random_state=123,
                           whiten='unit-variance')
             transformer.fit(X_train)

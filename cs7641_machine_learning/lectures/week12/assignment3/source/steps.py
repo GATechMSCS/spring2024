@@ -31,11 +31,18 @@ def step1(X_train:pd.DataFrame,
     elif dset == 'nf':
         n_clusters = 4
         components = 5
-        
-    X_train_copy1 = X_train.copy()
-    X_test_copy1 = X_test.copy()
-    gm = cl.expectation_maximization(X_train=X_train_copy1, X_test=X_test_copy1, components=components, which='Gaussian')
-    clustering = cl.cluster_model(X_train=X_train_copy1, X_test=X_test_copy1, n_clusters=n_clusters, which='kmeans')
+
+    # for GM
+    X_train_copyGM = X_train.copy()
+    X_test_copyGM = X_test.copy()
+
+    # for KM
+    X_train_copyKM = X_train.copy()
+    X_test_copyKM = X_test.copy()
+
+    # models
+    gm = cl.expectation_maximization(X_train=X_train_copyGM, X_test=X_test_copyGM, components=components, which='Gaussian')
+    clustering = cl.cluster_model(X_train=X_train_copyKM, X_test=X_test_copyKM, n_clusters=n_clusters, which='kmeans')
     results[dset]['step1']['gm'] = gm
     results[dset]['step1']['kmeans'] = clustering
     print(f'Step: 1 Complete\n')
@@ -226,7 +233,7 @@ def step5(X_train:pd.DataFrame,
                             'sparseRP': None,
                             'manifold': None},
                     'step5': {'gm': None,
-                            'kmean': None}}}
+                            'kmeans': None}}}
     
     results = step4(X_train,
                         y_train,
@@ -262,7 +269,7 @@ def step5(X_train:pd.DataFrame,
         
         results[dset]['step5']['gm'] = grid_search_gm_best
         results[dset]['step5']['kmeans'] = grid_search_cl_best
-    print(f'Step: 5 Complete\n')
+        print(f'Step: 5 Complete\n')
         
     return results
 

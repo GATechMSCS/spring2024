@@ -23,7 +23,8 @@ def gridsearch_nn(X_train,
                                 n_jobs=-1).fit(X_train, y_train)                    
     cvd_nn_pred = grid_search.predict(X_test)
 
-    grid_search_best = {'best_params': grid_search.best_params_,
+    grid_search_best = {'cv_results': grid_search.cv_results_,
+                        'best_params': grid_search.best_params_,
                         'best_score': grid_search.best_score_,
                         'y_pred': cvd_nn_pred}
 

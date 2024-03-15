@@ -85,7 +85,7 @@ def step3(X_train:pd.DataFrame,
                     results,)
     print(f'Step: 3')
     
-    # # DR
+    # DR
     if dset == 'cvd':
         n_clusters = 3
         components = 5
@@ -205,9 +205,29 @@ def step5(X_train:pd.DataFrame,
             X_test:pd.DataFrame,
             y_test:pd.Series,
             dset:str,
-            results,
             param_grid):
 
+    results = {dset: {'step1': {'gm': None,
+                            'kmeans': None},
+                    'step2': {'pca': None,
+                            'ica': None,
+                            'sparseRP': None,
+                            'manifold': None},
+                    'step3': {'pca': {'gm': None ,
+                                    'kmeans': None},
+                            'ica': {'gm': None,
+                                    'kmean': None},
+                            'sparseRP': {'gm': None,
+                                            'kmeans': None},
+                            'manifold': {'gm': None,
+                                            'kmeans': None}},
+                    'step4': {'pca': None ,
+                            'ica': None,
+                            'sparseRP': None,
+                            'manifold': None},
+                    'step5': {'gm': None,
+                            'kmean': None}}}
+    
     results = step4(X_train,
                         y_train,
                         X_test,
@@ -233,7 +253,7 @@ def step5(X_train:pd.DataFrame,
         print('GM NN Complete')
 
         print('Fitting and Predicting Clustering NN')
-        grid_search_gm_best = gridsearch_nn(X_train_cl,
+        grid_search_cl_best = gridsearch_nn(X_train_cl,
                                             y_train,
                                             X_test_cl,
                                             y_test,
@@ -242,46 +262,19 @@ def step5(X_train:pd.DataFrame,
         
         results[dset]['step5']['gm'] = grid_search_gm_best
         results[dset]['step5']['kmeans'] = grid_search_cl_best
-        print(f'Step: 5 Complete\n')
+    print(f'Step: 5 Complete\n')
         
     return results
 
 def main():
 
-    results = {dset: {'step1': {'gm': None,
-                            'kmeans': None},
-                    'step2': {'pca': None,
-                            'ica': None,
-                            'sparseRP': None,
-                            'manifold': None},
-                    'step3': {'pca': {'gm': None ,
-                                    'kmeans': None},
-                            'ica': {'gm': None,
-                                    'kmean': None},
-                            'sparseRP': {'gm': None,
-                                            'kmeans': None},
-                            'manifold': {'gm': None,
-                                            'kmeans': None}},
-                    'step4': {'pca': None ,
-                            'ica': None,
-                            'sparseRP': None,
-                            'manifold': None},
-                    'step5': {'gm': None,
-                            'kmean': None}}}
-
     param_grid = {
-        'hidden_layer_sizes': [(50,), (100,), (150,)],  # size of hidden layers
-        'activation': ['relu', 'tanh', 'logistic'],  # activation functions
-        'solver': ['adam'],  # solver for weight optimization
+        'hidden_layer_sizes': [(50,), (100,), (150,), (250,)],  # size of hidden layers
+        'activation': ['relu', 'logistic'],  # activation functions
         'alpha': [0.0001, 0.001, 0.01],  # L2 penalty (regularization term)
-        'learning_rate': ['constant', 'adaptive'],  # learning rate schedule
         'learning_rate_init': [0.001, 0.01, 0.1],  # initial learning rate
-        'max_iter': [200, 500, 1000],  # maximum number of iterations
-        'batch_size': [32, 64, 128],  # size of minibatches for stochastic optimizers
-        'tol': [1e-3, 1e-4, 1e-5],  # tolerance for stopping criteria
-        'early_stopping': [True, False],  # whether to use early stopping to prevent overfitting
-        'validation_fraction': [0.1, 0.2, 0.3],  # fraction of training data to use for validation
-        'n_iter_no_change': [5, 10, 20],}  # maximum number of epochs with no improvement to wait before stopping
+        'max_iter': [200, 350, 500], # maximum number of iterations
+        'batch_size': [150, 200, 250],} # size of minibatches for stochastic optimizers
 
     # CVD 
     X_train_scaled_cd, X_test_scaled_cd, y_train_cd, y_test_cd = final_dataset(dataset='cvd')
@@ -291,23 +284,23 @@ def main():
                         y_train=y_train_cd,
                         X_test=X_test_scaled_cd,
                         y_test=y_test_cd,
-                        dset='cvd')
+                        dset='cvd',
+                        param_grid=param_grid)
 
     # NF
-    X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
+    # X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
 
     # Run NF Model
-    results_nf = step5(X_train=X_train_scaled_nf,
-                            y_train=y_train_nf,
-                            X_test=X_test_scaled_nf, 
-                            y_test=y_test_nf,
-                            dset='nf',
-                            results=results,
-                            param_grid=param_grid)
+    # results_nf = step5(X_train=X_train_scaled_nf,
+    #                         y_train=y_train_nf,
+    #                         X_test=X_test_scaled_nf, 
+    #                         y_test=y_test_nf,
+    #                         dset='nf',
+    #                         param_grid=param_grid)
 
     print(results_cv)
     print()
-    print(results_nf)
+    #print(results_nf)
 
 if __name__ == "__main__":
     main()

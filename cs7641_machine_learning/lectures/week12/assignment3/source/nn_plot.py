@@ -11,7 +11,7 @@ from sklearn.neural_network import MLPClassifier
 # plotting
 import matplotlib.pyplot as plt
 from sklearn.model_selection import (learning_curve, LearningCurveDisplay,
-                                     validation_curve, ValidationCurveDisplay)
+                                    validation_curve, ValidationCurveDisplay)
 
 np.random.seed(123)
 
@@ -86,11 +86,11 @@ def main():
                 'param2_range': [50, 75, 100, 125, 150],
                 'sizes': [0.7, 0.75, 0.80, 0.90]}
 
-    nf_params = {'param1_name': 'batch_size',
-                'param1_range': [25, 50, 75, 100, 125],
-                'param2_name': 'hidden_layer_sizes',
-                'param2_range': [125, 150, 175, 200, 225, 230],
-                'sizes': [0.7, 0.75, 0.80, 0.90]}
+    # nf_params = {'param1_name': 'batch_size',
+    #             'param1_range': [25, 50, 75, 100, 125],
+    #             'param2_name': 'hidden_layer_sizes',
+    #             'param2_range': [125, 150, 175, 200, 225, 230],
+    #             'sizes': [0.7, 0.75, 0.80, 0.90]}
 
     # CVD
     X_train_scaled_cd, X_test_scaled_cd, y_train_cd, y_test_cd = final_dataset(dataset='cvd')
@@ -106,17 +106,17 @@ def main():
     val_curve_display(X_train_scaled_cd, y_train_cd, 'cvd', None, None, error=True)
 
     # NF
-    X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
+    # X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
 
     # Plot NF Model
-    fit_times, score_times = learn_curve_display(X_train_scaled_nf,
-                                                y_train_nf,
-                                                dset='nf',
-                                                sizes=nf_params['sizes'])
+    # fit_times, score_times = learn_curve_display(X_train_scaled_nf,
+    #                                             y_train_nf,
+    #                                             dset='nf',
+    #                                             sizes=nf_params['sizes'])
 
-    val_curve_display(X_train_scaled_nf, y_train_nf, 'nf', nf_params['param1_name'], nf_params['param1_range'], error=False)
-    val_curve_display(X_train_scaled_nf, y_train_nf, 'nf', nf_params['param2_name'], nf_params['param2_range'], error=False)
-    val_curve_display(X_train_scaled_nf, y_train_nf, 'nf', None, None, error=True)
+    # val_curve_display(X_train_scaled_nf, y_train_nf, 'nf', nf_params['param1_name'], nf_params['param1_range'], error=False)
+    # val_curve_display(X_train_scaled_nf, y_train_nf, 'nf', nf_params['param2_name'], nf_params['param2_range'], error=False)
+    # val_curve_display(X_train_scaled_nf, y_train_nf, 'nf', None, None, error=True)
 
 if __name__ == "__main__":
     main()

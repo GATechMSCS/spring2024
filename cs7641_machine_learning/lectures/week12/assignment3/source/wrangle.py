@@ -81,16 +81,16 @@ def clean(dataset:str) -> pd.DataFrame:
     return cleaned
 
 def split(cleaned:pd.DataFrame,
-          stratify:pd.Series,
-          cols_drop:str,
-          target_col:list,
-          test_size=0.15,):
+            stratify:pd.Series,
+            cols_drop:str,
+            target_col:list,
+            test_size=0.15,):
 
     # split data
     train, test = train_test_split(cleaned,
-                                   test_size=test_size,
-                                   random_state=123,
-                                   stratify=stratify)
+                                    test_size=test_size,
+                                    random_state=123,
+                                    stratify=stratify)
 
     # get X, y
     X_train = train.drop(cols_drop, axis=1)
@@ -102,7 +102,7 @@ def split(cleaned:pd.DataFrame,
     return X_train, X_test, y_train, y_test
 
 def scale(X_train:pd.DataFrame, 
-          X_test:pd.Series):
+            X_test:pd.Series):
     
     scale = StandardScaler()
     scale.fit(X_train)
@@ -140,9 +140,9 @@ def final_dataset(dataset:str) -> pd.DataFrame:
 
             print(f'\n{dataset.upper()} Splitting...')
             X_train, X_test, y_train, y_test = split(cleaned=cleaned,
-                                                     stratify=cleaned['cardio'],
-                                                     cols_drop=['cardio'],
-                                                     target_col='cardio')
+                                                    stratify=cleaned['cardio'],
+                                                    cols_drop=['cardio'],
+                                                    target_col='cardio')
             print(f'{dataset.upper()} Split...')
 
             print(f'\n{dataset.upper()} Scaling...')
@@ -156,9 +156,9 @@ def final_dataset(dataset:str) -> pd.DataFrame:
 
             print(f'\n{dataset.upper()} Splitting...')
             X_train, X_test, y_train, y_test = split(cleaned=cleaned,
-                                                     stratify=cleaned['food_group'],
-                                                     cols_drop=['food_group'],
-                                                     target_col='food_group')
+                                                    stratify=cleaned['food_group'],
+                                                    cols_drop=['food_group'],
+                                                    target_col='food_group')
             print(f'{dataset.upper()} Split...')
 
             print(f'\n{dataset.upper()} Scaling...')

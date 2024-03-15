@@ -14,9 +14,9 @@ from sklearn.mixture import (GaussianMixture)
 
 # model evaluation
 from sklearn.metrics import (rand_score, # lables known
-                             mutual_info_score,# lables known
-                             silhouette_score, # lables not known
-                             calinski_harabasz_score) # lables not known
+                            mutual_info_score,# lables known
+                            silhouette_score, # lables not known
+                            calinski_harabasz_score) # lables not known
 
 np.random.seed(123)
 
@@ -35,7 +35,7 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, componen
 
             # creating the train object
             gm_train = GaussianMixture(n_components=components,
-                                       random_state=123).fit(X_train)
+                                        random_state=123).fit(X_train)
 
             # get train labels
             X_train['mixture_clusters'] = gm_train.predict(X_train)
@@ -61,8 +61,8 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, n_clusters, which='
             
             # creating the train object
             clustering_train = KMeans(n_clusters=n_clusters,
-                                      max_iter=500,
-                                      random_state=123).fit(X_train)
+                                        max_iter=500,
+                                        random_state=123).fit(X_train)
 
             # get train labels
             X_train['feat_clusters'] = clustering_train.labels_
@@ -90,18 +90,18 @@ def main():
                             which=w)
 
         expectation_maximization(X_train=X_train_scaled_nf,
-                             X_test=X_test_scaled_nf,
-                             which=w)
+                                X_test=X_test_scaled_nf,
+                                which=w)
 
     # clustering
     for w in ['kmeans', 'meanshift', 'ac', 'birch']:
         cluster_model(X_train=X_train_scaled_cd,
-                  X_test=X_test_scaled_cd,
-                  which=w)
+                        X_test=X_test_scaled_cd,
+                        which=w)
     
         cluster_model(X_train=X_train_scaled_nf,
-                  X_test=X_test_scaled_nf,
-                  which=w)
+                        X_test=X_test_scaled_nf,
+                        which=w)
 
 if __name__ == "__main__":
     main()

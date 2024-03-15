@@ -81,8 +81,8 @@ def get_pca_plots(X_train:pd.DataFrame, X_test:pd.DataFrame, fit_pca):
 
     prop_var_expl = proportion_variance_explained(explained_variance)
     screech, var_exp, plot_pca = (scree_plot(fit_pca), 
-                                  variance_explained(prop_var_expl),
-                                  pca_plot(fit_pca, list_of_colors, X))
+                                    variance_explained(prop_var_expl),
+                                    pca_plot(fit_pca, list_of_colors, X))
 
     return screech, var_exp, plot_pca
     

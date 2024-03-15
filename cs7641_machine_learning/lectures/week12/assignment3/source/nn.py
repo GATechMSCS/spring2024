@@ -13,7 +13,7 @@ def gridsearch_nn(X_train,
                     y_train,
                     X_test,
                     y_test,
-                  param_grid):
+                    param_grid):
 
     nn = MLPClassifier(random_state=123)
     grid_search = GridSearchCV(nn,
@@ -30,7 +30,6 @@ def gridsearch_nn(X_train,
     return grid_search_best
 
 def main():
-
 
     param_grid = {
     'hidden_layer_sizes': [(50,), (100,), (150,), (250,)],  # size of hidden layers
@@ -50,13 +49,13 @@ def main():
                                 param_grid)
 
     # NF
-    X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
+    # X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
 
     # Run NF Model
-    nf_grid_nn = gridsearch_nn(X_train_scaled_nf,
-                               X_test_scaled_nf,
-                               y_train_nf,
-                               param_grid)
+    # nf_grid_nn = gridsearch_nn(X_train_scaled_nf,
+    #                             X_test_scaled_nf,
+    #                             y_train_nf,
+    #                             param_grid)
 
 if __name__ == "__main__":
     main()

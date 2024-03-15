@@ -17,9 +17,9 @@ from sklearn.mixture import (GaussianMixture)
 
 # model evaluation
 from sklearn.metrics import (adjusted_rand_score, # lables known
-                             adjusted_mutual_info_score,# lables known
-                             silhouette_score, # lables not known
-                             calinski_harabasz_score) # lables not known
+                            adjusted_mutual_info_score,# lables known
+                            silhouette_score, # lables not known
+                            calinski_harabasz_score) # lables not known
 
 # manipulate data
 import pandas as pd
@@ -103,10 +103,10 @@ def scatter_component_means(X_train, components, dset, xlabel, ylabel):
 ##### KMEANS
 def cluster_metrics(X_train, y_train):
     output = {'Inertia': {},
-              'Silhouette Score': {},
-              'Calinski Score': {},
-              'Adjusted Rand Score': {},
-              'Adjusted Mutual Info Score': {}}
+            'Silhouette Score': {},
+            'Calinski Score': {},
+            'Adjusted Rand Score': {},
+            'Adjusted Mutual Info Score': {}}
 
     for nclusters in range(2, 26):
         kmeans = KMeans(n_clusters=nclusters).fit(X_train)

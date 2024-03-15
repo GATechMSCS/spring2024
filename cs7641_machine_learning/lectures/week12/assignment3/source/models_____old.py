@@ -25,23 +25,23 @@ def put_it_all_together(X_train:pd.DataFrame,
 
     results = {dset: {'step1': {'gm': None,
                                 'kmeans': None},
-                      'step2': {'pca': None,
+                        'step2': {'pca': None,
                                 'ica': None,
                                 'sparseRP': None,
                                 'manifold': None},
-                      'step3': {'pca': {'gm': None ,
+                        'step3': {'pca': {'gm': None ,
                                         'kmeans': None},
                                 'ica': {'gm': None,
                                         'kmean': None},
                                 'sparseRP': {'gm': None,
-                                             'kmeans': None},
+                                            'kmeans': None},
                                 'manifold': {'gm': None,
-                                             'kmeans': None}},
-                      'step4': {'pca': None ,
+                                            'kmeans': None}},
+                        'step4': {'pca': None ,
                                 'ica': None,
                                 'sparseRP': None,
                                 'manifold': None},
-                      'step5': {'gm': None,
+                        'step5': {'gm': None,
                                 'kmean': None}}}
 
     param_grid = {
@@ -147,40 +147,40 @@ def put_it_all_together(X_train:pd.DataFrame,
                     print('\nFitting and Predicting PCA NN')
                     cvd_nn_pca = MLPClassifier(random_state=123)    
                     grid_search_pca = GridSearchCV(cvd_nn_pca,
-                                               param_grid,
-                                               cv=4,
-                                               scoring='recall',
-                                               n_jobs=-1).fit(pca_train, y_train)
+                                                param_grid,
+                                                cv=4,
+                                                scoring='recall',
+                                                n_jobs=-1).fit(pca_train, y_train)
                     cvd_nn_pca_pred = grid_search_pca.predict(pca_test)
                     print('PCA NN Complete')
 
                     print('\nFitting and Predicting ICA NN')
                     cvd_nn_ica = MLPClassifier(random_state=123)    
                     grid_search_ica = GridSearchCV(cvd_nn_ica,
-                                               param_grid,
-                                               cv=4,
-                                               scoring='recall',
-                                               n_jobs=-1).fit(ica_train, y_train)
+                                                param_grid,
+                                                cv=4,
+                                                scoring='recall',
+                                                n_jobs=-1).fit(ica_train, y_train)
                     cvd_nn_ica_pred = grid_search_ica.predict(ica_test)
                     print('ICA NN Complete')
 
                     print('\nFitting and Predicting Sparse RP NN')
                     cvd_nn_sparseRP = MLPClassifier(random_state=123)    
                     grid_search_RP = GridSearchCV(cvd_nn_sparseRP,
-                                               param_grid,
-                                               cv=4,
-                                               scoring='recall',
-                                               n_jobs=-1).fit(sparseRP_train, y_train)                    
+                                                param_grid,
+                                                cv=4,
+                                                scoring='recall',
+                                                n_jobs=-1).fit(sparseRP_train, y_train)                    
                     cvd_nn_sparseRP_pred = grid_search_RP.predict(sparseRP_test)
                     print('Sparse RP NN Complete')
 
                     print('\nFitting and Predicting Maniforld Learning NN')
                     cvd_nn_manifold = MLPClassifier(random_state=123)    
                     grid_search_manifold = GridSearchCV(cvd_nn_manifold,
-                                               param_grid,
-                                               cv=4,
-                                               scoring='recall',
-                                               n_jobs=-1).fit(manifold_train, y_train)                    
+                                                param_grid,
+                                                cv=4,
+                                                scoring='recall',
+                                                n_jobs=-1).fit(manifold_train, y_train)                    
                     cvd_nn_manifold_pred = grid_search_manifold.predict(manifold_test)
                     print('Maniforld Learning NN Complete')
 
@@ -217,20 +217,20 @@ def put_it_all_together(X_train:pd.DataFrame,
                     print('Fitting and Predicting GM NN')
                     cvd_nn_gm = MLPClassifier(random_state=123)
                     grid_search_gm = GridSearchCV(cvd_nn_gm,
-                                               param_grid,
-                                               cv=4,
-                                               scoring='recall',
-                                               n_jobs=-1).fit(X_train_gm, y_train)                    
+                                                param_grid,
+                                                cv=4,
+                                                scoring='recall',
+                                                n_jobs=-1).fit(X_train_gm, y_train)                    
                     cvd_nn_gm_pred = grid_search_gm.predict(X_test_gm)
                     print('GM NN Complete')
 
                     print('Fitting and Predicting Clustering NN')
                     cvd_nn_cl = MLPClassifier(random_state=123)
                     grid_search_cl = GridSearchCV(cvd_nn_cl,
-                                               param_grid,
-                                               cv=4,
-                                               scoring='recall',
-                                               n_jobs=-1).fit(X_train_cl, y_train)                    
+                                                param_grid,
+                                                cv=4,
+                                                scoring='recall',
+                                                n_jobs=-1).fit(X_train_cl, y_train)                    
                     cvd_nn_cl_pred = grid_search_gm.predict(X_test_cl)
                     print('Clustering NN Complete')
 
@@ -257,20 +257,20 @@ def main():
 
     # Run CVD Model
     results_cv = put_it_all_together(X_train=X_train_scaled_cd,
-                                     y_train=y_train_cd,
-                                     X_test=X_test_scaled_cd,
-                                     y_test=y_test_cd,
-                                     dset='cvd')
+                                    y_train=y_train_cd,
+                                    X_test=X_test_scaled_cd,
+                                    y_test=y_test_cd,
+                                    dset='cvd')
 
     # NF
     X_train_scaled_nf, X_test_scaled_nf, y_train_nf, y_test_nf = final_dataset(dataset='nf')
 
     # Run NF Model
     results_nf = put_it_all_together(X_train=X_train_scaled_nf,
-                                     y_train=y_train_nf,
-                                     X_test=X_test_scaled_nf, 
-                                     y_test=y_test_nf,
-                                     dset='nf')
+                                    y_train=y_train_nf,
+                                    X_test=X_test_scaled_nf, 
+                                    y_test=y_test_nf,
+                                    dset='nf')
 
     print(results_cv)
     print()

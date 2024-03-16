@@ -118,7 +118,7 @@ def cluster_metrics(X_train, y_train):
         output['Adjusted Rand Score'][nclusters] = adjusted_rand_score(y_train, cluster_labels)
         output['Adjusted Mutual Info Score'][nclusters] = adjusted_mutual_info_score(y_train, cluster_labels)
 
-    return output
+    return output, kmeans.cluster_centers_, cluster_labels
 
 def nclusters_optimal(X_train, y_train, dset):
 

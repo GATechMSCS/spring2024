@@ -63,12 +63,23 @@ def step2(X_train:pd.DataFrame,
                     dset,
                     results)
     print(f'Step: 2')
+
+    if dset == 'cvd':
+        pca_comp, ica_comp, srp_comp, hlle_comp = 4, 4, 4, 5
+        hlle_neigh = 21
+        
+        
+
+    elif dset == 'nf':
+        pca_comp, ica_comp, srp_comp, hlle_comp = 4, 4, 4, 5
+        hlle_neigh = 21
+        
     X_train_copy2 = X_train.copy()
     X_test_copy2 = X_test.copy()
-    gpca = dr.pca(X_train=X_train_copy2, X_test=X_test_copy2)
-    fica = dr.ica(X_train=X_train_copy2, X_test=X_test_copy2)
-    srp= dr.randomized_projections(X_train=X_train_copy2, X_test=X_test_copy2)
-    lleh = dr.manifold_learning(X_train=X_train_copy2, X_test=X_test_copy2)
+    gpca = dr.pca(X_train=X_train_copy2, X_test=X_test_copy2, components=pca_comp)
+    fica = dr.ica(X_train=X_train_copy2, X_test=X_test_copy2, components=ica_comp)
+    srp= dr.randomized_projections(X_train=X_train_copy2, X_test=X_test_copy2, components=srp_comp)
+    lleh = dr.manifold_learning(X_train=X_train_copy2, X_test=X_test_copy2, components=hlle_comp, neighbors=hlle_neigh)
     results[dset]['step2']['pca'] = gpca
     results[dset]['step2']['ica'] = fica
     results[dset]['step2']['sparseRP'] = srp
@@ -95,11 +106,11 @@ def step3(X_train:pd.DataFrame,
     # DR
     if dset == 'cvd':
         n_clusters = 3
-        components = 5
+        gmcomponents = 5
 
     elif dset == 'nf':
         n_clusters = 4
-        components = 5
+        gmcomponents = 5
 
     pca_train_copy = results[dset]['step2']['pca'][1].copy()
     pca_test_copy = results[dset]['step2']['pca'][2].copy()
@@ -111,19 +122,19 @@ def step3(X_train:pd.DataFrame,
     manifold_test_copy = results[dset]['step2']['manifold'][2].copy()
     
     # pca
-    gm_pca = cl.expectation_maximization(X_train=pca_train_copy, X_test=pca_test_copy, components=components, which='Gaussian')
+    gm_pca = cl.expectation_maximization(X_train=pca_train_copy, X_test=pca_test_copy, components=gmcomponents, which='Gaussian')
     clustering_pca = cl.cluster_model(X_train=pca_train_copy, X_test=pca_test_copy, n_clusters=n_clusters, which='kmeans')
 
     # ica
-    gm_ica = cl.expectation_maximization(X_train=ica_train_copy, X_test=ica_test_copy, components=components, which='Gaussian')
+    gm_ica = cl.expectation_maximization(X_train=ica_train_copy, X_test=ica_test_copy, components=gmcomponents, which='Gaussian')
     clustering_ica = cl.cluster_model(X_train=ica_train_copy, X_test=ica_test_copy, n_clusters=n_clusters, which='kmeans')
 
     # srp
-    gm_srp = cl.expectation_maximization(X_train=sparseRP_train_copy, X_test=sparseRP_test_copy, components=components, which='Gaussian')
+    gm_srp = cl.expectation_maximization(X_train=sparseRP_train_copy, X_test=sparseRP_test_copy, components=gmcomponents, which='Gaussian')
     clustering_srp = cl.cluster_model(X_train=sparseRP_train_copy, X_test=sparseRP_test_copy, n_clusters=n_clusters, which='kmeans')
 
     # manifold learning
-    gm_maniL = cl.expectation_maximization(X_train=manifold_train_copy, X_test=manifold_test_copy, components=components, which='Gaussian')
+    gm_maniL = cl.expectation_maximization(X_train=manifold_train_copy, X_test=manifold_test_copy, components=gmcomponents, which='Gaussian')
     clustering_maniL = cl.cluster_model(X_train=manifold_train_copy, X_test=manifold_test_copy, n_clusters=n_clusters, which='kmeans')
 
     # gm

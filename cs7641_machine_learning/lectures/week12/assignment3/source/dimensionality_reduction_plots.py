@@ -75,18 +75,20 @@ def dr_metrics(X_train, y_train, X_test, y_test, dset):
         output['Explained Variance'][ncomponents] = exp_var
         output['Explained Variance Ratio'][ncomponents] = exp_var_rat
         output['Kurtosis'][ncomponents] = kurt
-        output[score_key][ncomponents] = score 
+        output[score_key][ncomponents] = score
         output['Reconstruction Error'][ncomponents] = recon
         output['N Neighbors'][ncomponents] = nneighbors
         
     return output, X_new_pca, X_orgin_pca
 
-def optimal_ncomponents(output):
+def optimal_ncomponents(output, dset):
     
     xlabel = 'Number of Components'
     title = 'Determining Number of Components'
     
     for i, (metric, ncomponent_score) in enumerate(output.items()):
+        if metric == 'N Neighbors': continue
+        
 
         x = list(ncomponent_score.keys())
         y = list(ncomponent_score.values())
@@ -104,23 +106,19 @@ def optimal_ncomponents(output):
 
             case 'Recall': model = 'srp'
 
-            case 'Balanceed Accuracy': model = 'srp'
+            case 'Balanced Accuracy': model = 'srp'
 
             case 'Reconstruction Error':
                 x2 = list(output['N Neighbors'].values())
                 ax2 = ax.twiny()
-                ax2.set_xticks(x2)
-                ax2.set_xlabel('N Neighbors')
+                ax2.set(xlabel='N Neighbors', xticks=x2)
                 model = 'ml'
-
-            case 'N Neighbors':
-                continue
             
         ax.plot(x, y, linewidth=2, color='red')
-        ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 6), title=title)
+        ax.set(xlabel=xlabel, ylabel=metric, xticks=x, title=title)
         ax.grid()
 
-        save_loc = f'{course_assign}plots/{dset}/dr/{model}/optimal_components.png'
+        save_loc = f'{course_assign}plots/{dset}/dr/{model}/{metric}_opt_compon.png'
         plt.savefig(fname=f"{save_loc}")
 
         plt.tight_layout()
@@ -155,12 +153,10 @@ def get_pca_plots(X_train, y_train, X_test, y_test, dset):
                                                 X_test,
                                                 y_test, 
                                                 dset)
-    print(output)
-    list_of_colors = list(range(8696))
-
+    
     # plots
-    optimal_ncomponents(output)
-    #pca_plot(list_of_colors, X_new_pca, X_orgin_pca)
+    optimal_ncomponents(output, dset)
+    #pca_plot(list(range(8696)), X_new_pca, X_orgin_pca)
     
 def main():
 

@@ -36,12 +36,17 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, componen
             # creating the train object
             gm_train = GaussianMixture(n_components=components,
                                         random_state=123).fit(X_train)
+            gm_mixture = gm_train.predict(X_train)
 
-            # get train labels
-            X_train['mixture_clusters'] = gm_train.predict(X_train)
+            if X_test:
+                
+                # get train labels
+                X_train['mixture_clusters'] = gm_mixture
 
-            # get test labels
-            X_test['mixture_clusters'] = gm_train.predict(X_test)
+                # get test labels
+                X_test['mixture_clusters'] = gm_train.predict(X_test)
+
+            else: return gm_train, gm_mixture
             
             print('Done with Gaussian Mixture')
     print('Done with Expectation Maximization\n')
@@ -64,11 +69,17 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, n_clusters, which='
                                         max_iter=500,
                                         random_state=123).fit(X_train)
 
-            # get train labels
-            X_train['feat_clusters'] = clustering_train.labels_
+            km_cluster = clustering_train.predict(X_train)
+            
+            if X_test:
+                    
+                # get train labels
+                X_train['feat_clusters'] = km_cluster
 
-            # get test labels
-            X_test['feat_clusters'] = clustering_train.predict(X_test)
+                # get test labels
+                X_test['feat_clusters'] = clustering_train.predict(X_test)
+
+            else: return clustering_train, km_cluster
             
             print('Done with KMeans')
     print('Done with Clustering')

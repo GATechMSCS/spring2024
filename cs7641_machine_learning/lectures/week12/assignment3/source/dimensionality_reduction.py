@@ -31,18 +31,18 @@ def pca(X_train:pd.DataFrame, X_test:pd.DataFrame, components, kern='General'):
                                 random_state=123)
             transformer.fit(X_train)
             X_train_transformed = transformer.transform(X_train)
-            X_test_transformed = transformer.transform(X_test)
 
             # Train DF
             cols_tr = [f'pca{i}' for i in range(X_train_transformed.shape[1])]
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            # Test DF
-            cols_te = [f'pca{i}' for i in range(X_test_transformed.shape[1])]
-            X_test_transformed = pd.DataFrame(data=X_test_transformed,
-                                                columns=cols_te)
-
+            if X_test:
+                X_test_transformed = transformer.transform(X_test)
+                cols_te = [f'pca{i}' for i in range(X_test_transformed.shape[1])]
+                X_test_transformed = pd.DataFrame(data=X_test_transformed,
+                                                  columns=cols_te)
+            else: X_test_transformed = None
             
             print('Done with General PCA')
     print('Done with PCA')
@@ -66,18 +66,18 @@ def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, components, which='fast'):
                                 whiten='unit-variance')
             transformer.fit(X_train)
             X_train_transformed = transformer.transform(X_train)
-            X_test_transformed = transformer.transform(X_test)
 
             # Train DF
             cols_tr = [f'ica{i}' for i in range(X_train_transformed.shape[1])]
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            # Test DF
-            cols_te = [f'ica{i}' for i in range(X_test_transformed.shape[1])]
-            X_test_transformed = pd.DataFrame(data=X_test_transformed,
+            if X_test:
+                X_test_transformed = transformer.transform(X_test)
+                cols_te = [f'ica{i}' for i in range(X_test_transformed.shape[1])]
+                X_test_transformed = pd.DataFrame(data=X_test_transformed,
                                                 columns=cols_te)
-
+            else: X_test_transformed = None
             
             print('Done with FastICA')
     print('Done with ICA')
@@ -101,18 +101,19 @@ def randomized_projections(X_train:pd.DataFrame, X_test:pd.DataFrame, components
                                                 random_state=123)
             transformer.fit(X_train)
             X_train_transformed = transformer.transform(X_train)
-            X_test_transformed = transformer.transform(X_test)
 
             # Train DF
             cols_tr = [f'srp{i}' for i in range(X_train_transformed.shape[1])]
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            # Test DF
-            cols_te = [f'srp{i}' for i in range(X_test_transformed.shape[1])]
-            X_test_transformed = pd.DataFrame(data=X_test_transformed,
+            if X_test:
+                X_test_transformed = transformer.transform(X_test)
+                cols_te = [f'srp{i}' for i in range(X_test_transformed.shape[1])]
+                X_test_transformed = pd.DataFrame(data=X_test_transformed,
                                                 columns=cols_te)
-            
+            else: X_test_transformed = None
+
             print('Done with Sparse Random Projection')
     print('Done with Randomized Projections')
 
@@ -132,24 +133,26 @@ def manifold_learning(X_train:pd.DataFrame, X_test:pd.DataFrame, components, nei
             print('Fitting and Transforming with Locally Linear Embedding: Heissan Mapping')
             transformer = LocallyLinearEmbedding(n_neighbors=neighbors,
                                                 n_components=components,
-                                                reg=1e-3,
+                                                reg=1e-1,
                                                 eigen_solver='dense',
                                                 method='hessian',
                                                 random_state=123,
                                                 n_jobs=-1)
             transformer.fit(X_train)
             X_train_transformed = transformer.transform(X_train)
-            X_test_transformed = transformer.transform(X_test)
 
             # Train DF
             cols_tr = [f'hlle{i}' for i in range(X_train_transformed.shape[1])]
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            # Test DF
-            cols_te = [f'hlle{i}' for i in range(X_test_transformed.shape[1])]
-            X_test_transformed = pd.DataFrame(data=X_test_transformed,
+            if X_test:
+                X_test_transformed = transformer.transform(X_test)
+                cols_te = [f'hlle{i}' for i in range(X_test_transformed.shape[1])]
+                X_test_transformed = pd.DataFrame(data=X_test_transformed,
                                                 columns=cols_te)
+            else: X_test_transformed = None
+
             print('Done with Locally Linear Embedding: Heissan Mapping')
     print('Done with Manifold Learning')
 

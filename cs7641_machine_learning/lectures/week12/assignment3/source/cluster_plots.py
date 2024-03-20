@@ -55,7 +55,7 @@ def gm_metrics(X_train, y_train):
 
     return output
 
-def ncomponents_optimal(X_train, y_train, dset):
+def ncomponents_optimal(X_train, y_train, dset, model, step3):
 
     output = gm_metrics(X_train, y_train)
     
@@ -73,13 +73,17 @@ def ncomponents_optimal(X_train, y_train, dset):
         ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 26), title=title)
         ax.grid()
 
-        save_loc = f'{course_assign}plots/{dset}/clustering/gaussian_mixture/{metric}.png'
+        
+        if step3:   
+            save_loc = f'{course_assign}plots/{dset}/clustering/step3/gaussian_mixture/{model}/{model}_{metric}.png'
+        else:
+            save_loc = f'{course_assign}plots/{dset}/clustering/gaussian_mixture/{model}_{metric}.png'        
         plt.savefig(fname=f"{save_loc}")
 
         plt.tight_layout()
         plt.show()
 
-def scatter_component_means(X_train, components, dset, xlabel, ylabel):
+def scatter_component_means(X_train, components, dset, xlabel, ylabel, model, step3):
 
     gm_train, gm_mixture = cl.expectation_maximization(X_train=X_train, X_test=None, 
                                                     components=components)
@@ -94,7 +98,10 @@ def scatter_component_means(X_train, components, dset, xlabel, ylabel):
     plt.ylabel(ylabel)
     plt.title(label='Component Centers for Two Columns')
 
-    save_loc = f'{course_assign}plots/{dset}/clustering/gaussian_mixture/component_centers.png'
+    if step3:
+        save_loc = f'{course_assign}plots/{dset}/clustering/step3/gaussian_mixture/{model}/{model}_component_centers.png'
+    else:
+        save_loc = f'{course_assign}plots/{dset}/clustering/gaussian_mixture/{model}_component_centers.png'
     plt.savefig(fname=f"{save_loc}")
 
     plt.tight_layout()
@@ -119,7 +126,7 @@ def cluster_metrics(X_train, y_train):
 
     return output
 
-def nclusters_optimal(X_train, y_train, dset):
+def nclusters_optimal(X_train, y_train, dset, model, step3):
 
     output = cluster_metrics(X_train, y_train)
     
@@ -136,14 +143,16 @@ def nclusters_optimal(X_train, y_train, dset):
         ax.plot(x, y)
         ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 26), title=title)
         ax.grid()
-
-        save_loc = f'{course_assign}plots/{dset}/clustering/kmeans/{metric}.png'
+        if step3:
+            save_loc = f'{course_assign}plots/{dset}/clustering/step3/kmeans/{model}/{model}_{metric}.png'
+        else:
+            save_loc = f'{course_assign}plots/{dset}/clustering/kmeans/{model}_{metric}.png'
         plt.savefig(fname=f"{save_loc}")
 
         plt.tight_layout()
         plt.show()
 
-def scatter_cluster_centers(X_train, k, dset, xlabel, ylabel):
+def scatter_cluster_centers(X_train, k, dset, xlabel, ylabel, model, step3):
 
     clustering_train, km_cluster = cl.cluster_model(X_train=X_train, X_test=None, n_clusters=k)
     centers = clustering_train.cluster_centers_
@@ -157,7 +166,10 @@ def scatter_cluster_centers(X_train, k, dset, xlabel, ylabel):
     plt.ylabel(ylabel)
     plt.title(label='Cluster Centers for Two Columns')
 
-    save_loc = f'{course_assign}plots/{dset}/clustering/kmeans/cluster_centers.png'
+    if step3:
+        save_loc = f'{course_assign}plots/{dset}/clustering/step3/kmeans/{model}/{model}_cluster_centers.png'
+    else:
+        save_loc = f'{course_assign}plots/{dset}/clustering/kmeans/{model}_cluster_centers.png'
     plt.savefig(fname=f"{save_loc}")
 
     plt.tight_layout()

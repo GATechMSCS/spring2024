@@ -26,12 +26,12 @@ def put_it_all_together(X_train:pd.DataFrame,
 
     print('\nRunning All Steps')
 
-    results = step5(X_train,
-                    y_train,
-                    X_test,
-                    y_test,
-                    dset,
-                    param_grid)
+    results = step5(X_train=X_train,
+                    y_train=y_train,
+                    X_test=X_test,
+                    y_test=y_test,
+                    dset=dset,
+                    param_grid=param_grid)
 
     print('Completed All Steps')
 

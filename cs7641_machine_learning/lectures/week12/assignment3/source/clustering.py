@@ -38,7 +38,7 @@ def expectation_maximization(X_train:pd.DataFrame, X_test:pd.DataFrame, componen
                                         random_state=123).fit(X_train)
             gm_mixture = gm_train.predict(X_train)
 
-            if X_test:
+            if isinstance(X_test, pd.DataFrame):
                 
                 # get train labels
                 X_train['mixture_clusters'] = gm_mixture
@@ -71,7 +71,7 @@ def cluster_model(X_train:pd.DataFrame, X_test:pd.DataFrame, n_clusters, which='
 
             km_cluster = clustering_train.predict(X_train)
             
-            if X_test:
+            if isinstance(X_test, pd.DataFrame):
                     
                 # get train labels
                 X_train['feat_clusters'] = km_cluster

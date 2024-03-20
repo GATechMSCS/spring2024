@@ -14,7 +14,7 @@ from sklearn.manifold import (LocallyLinearEmbedding)
 np.random.seed(123)
 
 # linear
-def pca(X_train:pd.DataFrame, X_test:pd.DataFrame, components, kern='General'):
+def pca(X_train:pd.DataFrame, X_test, components, kern='General'):
     """_summary_
 
     Args:
@@ -36,8 +36,8 @@ def pca(X_train:pd.DataFrame, X_test:pd.DataFrame, components, kern='General'):
             cols_tr = [f'pca{i}' for i in range(X_train_transformed.shape[1])]
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
-
-            if X_test:
+            
+            if isinstance(X_test, pd.DataFrame):
                 X_test_transformed = transformer.transform(X_test)
                 cols_te = [f'pca{i}' for i in range(X_test_transformed.shape[1])]
                 X_test_transformed = pd.DataFrame(data=X_test_transformed,
@@ -49,7 +49,7 @@ def pca(X_train:pd.DataFrame, X_test:pd.DataFrame, components, kern='General'):
 
     return transformer, X_train_transformed, X_test_transformed     
 
-def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, components, which='fast'):
+def ica(X_train:pd.DataFrame, X_test, components, which='fast'):
     """_summary_
 
     Args:
@@ -72,7 +72,7 @@ def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, components, which='fast'):
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            if X_test:
+            if isinstance(X_test, pd.DataFrame):
                 X_test_transformed = transformer.transform(X_test)
                 cols_te = [f'ica{i}' for i in range(X_test_transformed.shape[1])]
                 X_test_transformed = pd.DataFrame(data=X_test_transformed,
@@ -84,7 +84,7 @@ def ica(X_train:pd.DataFrame, X_test:pd.DataFrame, components, which='fast'):
 
     return transformer, X_train_transformed, X_test_transformed
 
-def randomized_projections(X_train:pd.DataFrame, X_test:pd.DataFrame, components, which='Sparse'):
+def randomized_projections(X_train:pd.DataFrame, X_test, components, which='Sparse'):
     """_summary_
 
     Args:
@@ -107,7 +107,7 @@ def randomized_projections(X_train:pd.DataFrame, X_test:pd.DataFrame, components
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            if X_test:
+            if isinstance(X_test, pd.DataFrame):
                 X_test_transformed = transformer.transform(X_test)
                 cols_te = [f'srp{i}' for i in range(X_test_transformed.shape[1])]
                 X_test_transformed = pd.DataFrame(data=X_test_transformed,
@@ -119,7 +119,7 @@ def randomized_projections(X_train:pd.DataFrame, X_test:pd.DataFrame, components
 
     return transformer, X_train_transformed, X_test_transformed
 
-def manifold_learning(X_train:pd.DataFrame, X_test:pd.DataFrame, components, neighbors,  which='hem'):
+def manifold_learning(X_train:pd.DataFrame, X_test, components, neighbors,  which='hem'):
     """_summary_
 
     Args:
@@ -146,7 +146,7 @@ def manifold_learning(X_train:pd.DataFrame, X_test:pd.DataFrame, components, nei
             X_train_transformed = pd.DataFrame(data=X_train_transformed,
                                                 columns=cols_tr)
 
-            if X_test:
+            if isinstance(X_test, pd.DataFrame):
                 X_test_transformed = transformer.transform(X_test)
                 cols_te = [f'hlle{i}' for i in range(X_test_transformed.shape[1])]
                 X_test_transformed = pd.DataFrame(data=X_test_transformed,

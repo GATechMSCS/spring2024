@@ -74,7 +74,7 @@ def optimal_ncomponents(X_train, dset):
         x = list(ncomponent.keys())
         y = list(ncomponent.values())
 
-        fig, ax = plt.subplots(figsize=(20, 8))
+        fig, ax = plt.subplots()#figsize=(15, 8)
 
         match metric:
             case 'Explained Variance': model = 'pca'

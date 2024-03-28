@@ -42,7 +42,7 @@ def gm_metrics(X_train, y_train):
             'Adjusted Rand Score': {},
             'Adjusted Mutual Info Score': {}}
 
-    for components in range(2, 21):
+    for components in range(2, 14):
         gm_train, gm_mixture = cl.expectation_maximization(X_train=X_train, X_test=None, 
                                          components=components)
 
@@ -64,13 +64,13 @@ def ncomponents_optimal(X_train, y_train, dset, model, step3):
     
     for i, (metric, ncomponent_score) in enumerate(output.items()):
 
-        fig, ax = plt.subplots(figsize=(20, 8))
+        fig, ax = plt.subplots()#figsize=(15, 8)
 
         x = list(ncomponent_score.keys())
         y = list(ncomponent_score.values())
 
         ax.plot(x, y)
-        ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 26), title=title)
+        ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 14), title=title)
         ax.grid()
 
         
@@ -115,7 +115,7 @@ def cluster_metrics(X_train, y_train):
             'Adjusted Rand Score': {},
             'Adjusted Mutual Info Score': {}}
 
-    for nclusters in range(2, 26):
+    for nclusters in range(2, 14):
         clustering_train, km_cluster = cl.cluster_model(X_train=X_train, X_test=None, n_clusters=nclusters)
         
         output['Inertia'][nclusters] = clustering_train.inertia_
@@ -135,13 +135,13 @@ def nclusters_optimal(X_train, y_train, dset, model, step3):
     
     for i, (metric, nclust_score) in enumerate(output.items()):
 
-        fig, ax = plt.subplots(figsize=(20, 8))
+        fig, ax = plt.subplots()#figsize=(15, 8)
 
         x = list(nclust_score.keys())
         y = list(nclust_score.values())
 
         ax.plot(x, y)
-        ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 26), title=title)
+        ax.set(xlabel=xlabel, ylabel=metric, xticks=range(1, 14), title=title)
         ax.grid()
         if step3:
             save_loc = f'{course_assign}plots/{dset}/clustering/step3/kmeans/{model}/{model}_{metric}.png'

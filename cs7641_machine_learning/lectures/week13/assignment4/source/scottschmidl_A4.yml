@@ -9,17 +9,16 @@ channels:
   - conda-forge
 
 dependencies:
-  - ipython=8.22.2
+  - ipython=8.20.0
   - jupyter=1.0.0
   - matplotlib=3.8.0
   - notebook=7.0.8
   - numpy=1.26.4
-  - openpyxl=3.0.10
-  - pandas=2.1.4
   - python=3.12.2
-  - scikit-learn=1.4.0
-  - scikit-learn-intelex=2024.1.0
   - seaborn=0.12.2
+  - pip=23.3.1
+  - pip:
+    - bettermdptools=0.6.0
 
 # to verify environment:
 # conda info --envs

@@ -1,5 +1,6 @@
 The files to access the code can be found here: https://gatech.app.box.com/folder/252516898943.
 If the link above doesn't work try this one: https://gatech.box.com/s/gppuy99ykxvixdw2lh8dc1qwxnjnsas6
+NOTE: assignment3.ipynb takes a few hours to run all the way.
 
 The technologies used in this paper:
 1) ipython=8.22.2

@@ -12,6 +12,8 @@ from bettermdptools.utils.callbacks import MyCallbacks
 import matplotlib.pyplot as plt
 from gymnasium.spaces import Tuple, Discrete
 
+np.random.seed(123)
+
 mdp = 'Blackjack-v1'
 size = Tuple([Discrete(32), Discrete(11), Discrete(2)])
 gamma=[0.50, 0.75, .99]

@@ -10,10 +10,12 @@ import matplotlib.pyplot as plt
 from bettermdptools.utils.grid_search import GridSearch
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 
+np.random.seed(123)
+
 def make_env(mdp, size):
     env = gym.make(id=mdp,
                    desc=size,
-                   render_mode=None)
+                   render_mode='ansi')
 
     return env
 

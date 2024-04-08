@@ -14,10 +14,10 @@ np.random.seed(123)
 
 def make_env(mdp, size, slip, render, seed, prob_frozen, ep_steps):
 
-    size = generate_random_map(size=size, p=prob_frozen)
-
     match mdp:
         case 'FrozenLake8x8-v1':
+
+            size = generate_random_map(size=size, p=prob_frozen)
     
             env = gym.make(id=mdp,
                    desc=size,

@@ -10,19 +10,8 @@ from bettermdptools.utils.decorators import add_to
 from bettermdptools.utils.grid_search import GridSearch
 from bettermdptools.utils.callbacks import MyCallbacks
 import matplotlib.pyplot as plt
-from gymnasium.spaces import Tuple, Discrete
 
 np.random.seed(123)
-
-mdp = 'Blackjack-v1'
-size = Tuple([Discrete(32), Discrete(11), Discrete(2)])
-gamma=[0.50, 0.75, .99]
-iters = [500, 750, 1000]
-theta=[.001, .00001]
-bl_base = gym.make(id=mdp,
-                    render_mode=None)
-bl_base.observation_space = size
-blackjack = BlackjackWrapper(bl_base)
 
 # FROM UTILITIES
 # @add_to(MyCallbacks)
@@ -30,7 +19,7 @@ blackjack = BlackjackWrapper(bl_base)
 #     if episode % 1000 == 0:
 #     	print(" episode=", episode)
 
-q_learning_results = GridSearch.q_learning_grid_search(blackjack, gamma, iters, theta)
+# q_learning_results = GridSearch.q_learning_grid_search(blackjack, gamma, iters, theta)
 # pi_grid_results = GridSearch.pi_grid_search(blackjack, gamma, iters, theta)
 # vi_grid_results = GridSearch.vi_grid_search(blackjack, gamma, iters, theta)
 

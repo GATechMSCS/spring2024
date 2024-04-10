@@ -65,7 +65,7 @@ def run_ql_search(process, n_episodes, gamma=0.99, epsilon_decay_ratio=0.9, init
             np.random.seed(seed)
             process.reset(seed=seed)
 
-            print(f"running q_learning with {param} = {gam}, edr = {epsilon_decay_ratio}, init alpha = {init_alpha}")
+            print(f"q_learning: {param}={gam}; edr={epsilon_decay_ratio}; ialpha={init_alpha}; episodes={n_episodes}")
             Q, V, pi, Q_track, pi_track = RL(env=process).q_learning(n_episodes=n_episodes,
                                                                     gamma=gam,
                                                                     epsilon_decay_ratio=epsilon_decay_ratio,
@@ -92,7 +92,7 @@ def run_ql_search(process, n_episodes, gamma=0.99, epsilon_decay_ratio=0.9, init
             np.random.seed(seed)
             process.reset(seed=seed)
 
-            print(f"running q_learning with {param} = {edr}; gamma = {gamma}, init alpha = {init_alpha}")
+            print(f"q_learning: {param}={edr}; gamma={gamma}; ialpha={init_alpha}; episodes={n_episodes}")
             Q, V, pi, Q_track, pi_track = RL(env=process).q_learning(n_episodes=n_episodes,
                                                                     gamma=gamma,
                                                                     epsilon_decay_ratio=edr,
@@ -119,7 +119,7 @@ def run_ql_search(process, n_episodes, gamma=0.99, epsilon_decay_ratio=0.9, init
             np.random.seed(seed)
             process.reset(seed=seed)
 
-            print(f"running q_learning with {param} = {alpha}; gamma = {gamma}; edr = {epsilon_decay_ratio}")
+            print(f"q_learning: {param}={alpha}; gamma={gamma}; edr={epsilon_decay_ratio}; episodes={n_episodes}")
             Q, V, pi, Q_track, pi_track = RL(env=process).q_learning(n_episodes=n_episodes,
                                                                     gamma=gamma,
                                                                     epsilon_decay_ratio=epsilon_decay_ratio,
@@ -152,8 +152,8 @@ def run_pi_search(process, n_iters, gamma=1.0, theta=1e-10):
             np.random.seed(seed)
             process.reset(seed=seed) 
 
-            print(f"running PI with {param} = {gam}; theta = {theta}")
-            V, V_track, pi = Planner(P=process.P).policy_iteration(n_iters=n_iters,
+            print(f"PI: {param}={gam}; theta={theta}; iters={n_iters}")
+            V,V_track, pi = Planner(P=process.P).policy_iteration(n_iters=n_iters,
                                                                     gamma=gam,
                                                                     theta=theta)
             episode_rewards = TestEnv.test_env(env=process, n_iters=n_iters, pi=pi)
@@ -176,8 +176,8 @@ def run_pi_search(process, n_iters, gamma=1.0, theta=1e-10):
             np.random.seed(seed)
             process.reset(seed=seed) 
 
-            print(f"running PI with {param} = {th}; gamma = {gamma}")
-            V, V_track, pi = Planner(P=process.P).policy_iteration(n_iters=n_iters,
+            print(f"PI: {param}={th}; gamma={gamma}; iters={n_iters}")
+            V,V_track, pi = Planner(P=process.P).policy_iteration(n_iters=n_iters,
                                                                     gamma=gamma,
                                                                     theta=th)
             episode_rewards = TestEnv.test_env(env=process, n_iters=n_iters, pi=pi)
@@ -206,7 +206,7 @@ def run_vi_search(process, n_iters, gamma=1.0, theta=1e-10):
             np.random.seed(seed)
             process.reset(seed=seed) 
 
-            print(f"running VI with {param} = {gam}; theta = {theta}")            
+            print(f"VI: {param}={gam}; theta={theta}; iters={n_iters}")            
             V, V_track, pi = Planner(P=process.P).value_iteration(n_iters=n_iters,
                                                                  gamma=gam,
                                                                  theta=theta)
@@ -230,7 +230,7 @@ def run_vi_search(process, n_iters, gamma=1.0, theta=1e-10):
             np.random.seed(seed)
             process.reset(seed=seed) 
 
-            print(f"running VI with {param} = {th}; gamma = {gamma}")            
+            print(f"VI: {param}={th}; gamma={gamma}; iters={n_iters}")            
             V, V_track, pi = Planner(P=process.P).value_iteration(n_iters=n_iters,
                                                                     gamma=gamma,
                                                                     theta=th)

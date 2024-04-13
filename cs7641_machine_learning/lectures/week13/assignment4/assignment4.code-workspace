@@ -1,20 +1,11 @@
 {
 	"folders": [
-		{
-			"path": "../../../../../../../Schmidl-DS-Practice/supplement4vdsml"
-		},
-		{
-			"path": "../../../../../../../Schmidl-DS-Practice/datascience_programs/GalvanizeDSI/lectures/reinforcement-learning"
-		},
-		{
-			"path": "../../../.."
-		},
-		{
-			"path": "../../../../../../../../../miniconda3/envs/mlmdp/lib/python3.12/site-packages/bettermdptools"
-		},
-		{
-			"path": "../../../../../../../../../miniconda3/envs/mlmdp/lib/python3.12/site-packages/gymnasium"
-		}
-	],
+        {
+            "path": "../../../.."
+        },
+        {
+            "path": "../../../../../../../../../miniconda3/envs/mlmdp/lib/python3.12/site-packages/bettermdptools"
+        }
+    ],
     "settings": {}
 }

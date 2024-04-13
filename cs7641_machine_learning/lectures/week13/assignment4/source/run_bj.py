@@ -248,3 +248,119 @@ new_fields = {'V': np.append(bj_vi_theta[1e-9]['V'],
               'average_episode_rewards': np.append(bj_vi_theta[1e-9]['average_episode_rewards'],
                                                   [0]*99999)}
 pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathvi+'/bj_vi_theta9.csv')
+
+############################## FINAL ####################################
+from create_env_gs import make_env
+from gymnasium.spaces import Tuple, Discrete
+from bettermdptools.utils.blackjack_wrapper import BlackjackWrapper
+from bettermdptools.utils.test_env import TestEnv
+from bettermdptools.algorithms.rl import RL
+from bettermdptools.algorithms.planner import Planner
+
+seed = 123
+
+pathql = "/home/leonardo_leads/Documents/SchoolDocs/ga_tech_masters/omscs_ml/spring2024/cs7641_machine_learning/lectures/week13/assignment4/source/csv/bj/qlearning/"
+pathpi = "/home/leonardo_leads/Documents/SchoolDocs/ga_tech_masters/omscs_ml/spring2024/cs7641_machine_learning/lectures/week13/assignment4/source/csv/bj/pi/"
+pathvi = "/home/leonardo_leads/Documents/SchoolDocs/ga_tech_masters/omscs_ml/spring2024/cs7641_machine_learning/lectures/week13/assignment4/source/csv/bj/vi/"
+
+# make environments
+mdp_bj = 'Blackjack-v1'
+render_mode_bj = None #'rgb_array'
+size_bj = Tuple([Discrete(32), Discrete(11), Discrete(2)])
+ep_steps_bj = 100
+blackjack = make_env(mdp=mdp_bj,
+                     size=size_bj,
+                     slip=None,
+                     render=render_mode_bj,
+                     seed=seed,
+                     prob_frozen=None,
+                     ep_steps=ep_steps_bj)
+
+iters = 100000
+
+############################### Q LEARNING ###################
+np.random.seed(seed)
+blackjack.reset(seed=seed)
+
+print(f"q_learning: gamma={ql_bj_gamma_best}; edr={ql_bj_edr_best}; ialpha={ql_bj_alpha_best}; episodes={iters}")
+Q, V, pi, Q_track, pi_track = RL(env=blackjack).q_learning(n_episodes=iters,
+                                                        gamma=ql_bj_gamma_best,
+                                                        epsilon_decay_ratio=ql_bj_edr_best,
+                                                        init_alpha=ql_bj_alpha_best)
+episode_rewards = TestEnv.test_env(env=blackjack, n_iters=iters, pi=pi)
+avg_ep_rewards = np.mean(episode_rewards)
+
+results_ql = {'Q': Q, 
+                    'V': V,
+                    'pi': pi, 
+                    'Q_track': Q_track,
+                    'pi_track': pi_track, 
+                    'episode_rewards': episode_rewards,
+                    'average_episode_rewards': avg_ep_rewards}
+
+print("Avg. episode reward: ", avg_ep_rewards) 
+print("###################\n")
+
+new_fields = {'V': np.append(results_ql['V'],
+                             [0]*99710),
+              'pi': list(results_ql['pi'].values())+[0]*99710,
+              'episode_rewards': results_ql['episode_rewards'],
+              'average_episode_rewards': np.append(results_ql['average_episode_rewards'],
+                                                  [0]*99999)}
+pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathql+'/results_ql_final.csv')
+
+######################## POLICY ITERATION ######################
+np.random.seed(seed)
+blackjack.reset(seed=seed) 
+
+print(f"PI: gamma={bj_pi_gam_best}; theta={bj_pi_theta_best}; iters={iters}")
+V,V_track, pi = Planner(P=blackjack.P).policy_iteration(n_iters=iters,
+                                                        gamma=bj_pi_gam_best,
+                                                        theta=bj_pi_theta_best)
+episode_rewards = TestEnv.test_env(env=blackjack, n_iters=iters, pi=pi)
+avg_ep_rewards = np.mean(episode_rewards)
+
+results_pi = {'V': V, 
+                    'vi_track': V_track, 
+                    'pi': pi,
+                    'episode_rewards': episode_rewards,
+                    'average_episode_rewards': avg_ep_rewards}
+    
+print("Avg. episode reward: ", avg_ep_rewards)
+print("###################\n")
+
+new_fields = {'V': np.append(results_pi['V'],
+                             [0]*99710),
+              'pi': list(results_pi['pi'].values())+[0]*99710,
+              'episode_rewards': results_pi['episode_rewards'],
+              'average_episode_rewards': np.append(results_pi['average_episode_rewards'],
+                                                  [0]*99999)}
+pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathpi+'/results_pi_final.csv')
+
+################# VALUE ITERATION ######################
+np.random.seed(seed)
+blackjack.reset(seed=seed) 
+
+print(f"VI: gamma={bj_vi_gam_best}; theta={bj_vi_theta_best}; iters={iters}")            
+V, V_track, pi = Planner(P=blackjack.P).value_iteration(n_iters=iters,
+                                                        gamma=bj_vi_gam_best,
+                                                        theta=bj_vi_theta_best)
+episode_rewards = TestEnv.test_env(env=blackjack, n_iters=iters, pi=pi)
+avg_ep_rewards = np.mean(episode_rewards)
+
+results_vi = {'V': V, 
+                'vi_track': V_track, 
+                'pi': pi,
+                'episode_rewards': episode_rewards,
+                'average_episode_rewards': avg_ep_rewards}
+
+print("Avg. episode reward: ", avg_ep_rewards)
+print("###################\n")
+
+new_fields = {'V': np.append(results_vi['V'],
+                             [0]*99710),
+              'pi': list(results_vi['pi'].values())+[0]*99710,
+              'episode_rewards': results_vi['episode_rewards'],
+              'average_episode_rewards': np.append(results_vi['average_episode_rewards'],
+                                                  [0]*99999)}
+pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathvi+'/results_vi_final.csv')

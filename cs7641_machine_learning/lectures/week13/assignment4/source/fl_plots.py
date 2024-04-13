@@ -32,3 +32,17 @@ def fl_policy_map(pi, V):
     title="FL Mapped Policy\nArrows represent best action"
     val_max, policy_map = Plots.get_policy_map(pi, V, fl_actions, fl_map_size)
     Plots.plot_policy(val_max, policy_map, fl_map_size, title)
+
+
+# size=(4,4)
+# Plots.values_heat_map(V_vi_gamma, "Frozen Lake\nValue Iteration State Values", size)
+
+# max_value_per_iter = np.trim_zeros(np.mean(v_track_vi_gamma, axis=1), 'b')
+# Plots.v_iters_plot(max_value_per_iter, "Frozen Lake\nMean Value v Iterations")
+
+# fl_actions = {0: "←", 1: "↓", 2: "→", 3: "↑"}
+# fl_map_size=(4, 4)
+# title="FL Mapped Policy\nArrows represent best action"
+# val_max, policy_map = Plots.get_policy_map(pi_vi_gamma, V_vi_gamma, fl_actions, fl_map_size)
+# Plots.plot_policy(val_max, policy_map, fl_map_size, title)
+

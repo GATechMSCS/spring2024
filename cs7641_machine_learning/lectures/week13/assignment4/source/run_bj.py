@@ -303,14 +303,14 @@ print("###################\n")
 
 Q_track = results_ql['Q_track']
 
-# Initialize V_track to zeros
-V_track = np.zeros((Q_track.shape[0], Q_track.shape[1]))
+# # Initialize V_track to zeros
+# V_track = np.zeros((Q_track.shape[0], Q_track.shape[1]))
 
-# Find indices where all Q-values are initialized to 10
-initial_indices = np.all(Q_track == 10, axis=2)
+# # Find indices where all Q-values are initialized to 10
+# initial_indices = np.all(Q_track == 10, axis=2)
 
-# Replace initialized Q-values with zeros in those indices
-Q_track[initial_indices] = 0
+# # Replace initialized Q-values with zeros in those indices
+# Q_track[initial_indices] = 0
 
 # Calculate V_track by taking the maximum Q-value for each state
 V_track = np.max(Q_track, axis=2)

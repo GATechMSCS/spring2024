@@ -9,7 +9,7 @@ The technologies used in this paper:
 5) numpy=1.26.4
 6) pandas=2.2.1
 7) python=3.12.2
-8) seaborn=0.12.2
+8) seaborn=0.13.0
 9) pip=23.3.1
 10) bettermdptools=0.6.0
 

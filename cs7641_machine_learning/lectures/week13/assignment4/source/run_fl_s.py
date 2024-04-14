@@ -283,11 +283,11 @@ iters = 100000
 np.random.seed(seed)
 frozenlakeS.reset(seed=seed)
 
-print(f"q_learning: gamma={ql_fl_S_gamma_best}; edr={ql_fl_S_edr_best}; ialpha={ql_fl_S_alpha_best}; episodes={iters}")
+#print(f"q_learning: gamma={ql_fl_S_gamma_best}; edr={ql_fl_S_edr_best}; ialpha={ql_fl_S_alpha_best}; episodes={iters}")
 Q, V, pi, Q_track, pi_track = RL(env=frozenlakeS).q_learning(n_episodes=iters,
-                                                        gamma=ql_fl_S_gamma_best,
-                                                        epsilon_decay_ratio=ql_fl_S_edr_best,
-                                                        init_alpha=ql_fl_S_alpha_best)
+                                                        gamma=0.9,
+                                                        epsilon_decay_ratio=0.8,
+                                                        init_alpha=0.7)
 episode_rewards = TestEnv.test_env(env=frozenlakeS, n_iters=iters, pi=pi)
 avg_ep_rewards = np.mean(episode_rewards)
 
@@ -302,50 +302,80 @@ results_ql = {'Q': Q,
 print("Avg. episode reward: ", avg_ep_rewards) 
 print("###################\n")
 
+Q_track = results_ql['Q_track']
+
+# Initialize V_track to zeros
+V_track = np.zeros((Q_track.shape[0], Q_track.shape[1]))
+
+# Find indices where all Q-values are initialized to 10
+initial_indices = np.all(Q_track == 10, axis=2)
+
+# Replace initialized Q-values with zeros in those indices
+Q_track[initial_indices] = 0
+
+# Calculate V_track by taking the maximum Q-value for each state
+V_track = np.max(Q_track, axis=2)
+
+# Calculate the mean delta across all states for each episode
+mean_delta_V_ql = np.mean(np.abs(V_track[1:] - V_track[:-1]), axis=1)
+
 new_fields = {'V': np.append(results_ql['V'],
                              [0]*99984),
               'pi': list(results_ql['pi'].values())+[0]*99984,
               'episode_rewards': results_ql['episode_rewards'],
+              'cumulative_sum': np.cumsum(results_ql['episode_rewards']),
               'average_episode_rewards': np.append(results_ql['average_episode_rewards'],
                                                   [0]*99999)}
+
 pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathql+'/results_ql_final.csv')
+pd.DataFrame(data=np.trim_zeros(np.mean(V_track, axis=1), 'b')).to_csv(path_or_buf=pathql+'MeanV.csv')
+pd.DataFrame(data=V_track).to_csv(path_or_buf=pathql+'/results_v_track.csv')
+pd.DataFrame(data=mean_delta_V_ql).to_csv(path_or_buf=pathql+'/results_mean_delta_v.csv')
 
 ######################## POLICY ITERATION ######################
 np.random.seed(seed)
 frozenlakeS.reset(seed=seed) 
 
-print(f"PI: gamma={fl_S_pi_gam_best}; theta={fl_S_pi_theta_best}; iters={iters}")
+#print(f"PI: gamma={fl_S_pi_gam_best}; theta={fl_S_pi_theta_best}; iters={iters}")
 V,V_track, pi = Planner(P=frozenlakeS.P).policy_iteration(n_iters=iters,
-                                                        gamma=fl_S_pi_gam_best,
-                                                        theta=fl_S_pi_theta_best)
+                                                        gamma=0.999,
+                                                        theta=1e-5)
 episode_rewards = TestEnv.test_env(env=frozenlakeS, n_iters=iters, pi=pi)
 avg_ep_rewards = np.mean(episode_rewards)
 
 results_pi = {'V': V, 
-                    'vi_track': V_track, 
-                    'pi': pi,
-                    'episode_rewards': episode_rewards,
-                    'average_episode_rewards': avg_ep_rewards}
+                'vi_track': V_track, 
+                'pi': pi,
+                'episode_rewards': episode_rewards,
+                'average_episode_rewards': avg_ep_rewards}
     
 print("Avg. episode reward: ", avg_ep_rewards)
 print("###################\n")
+
+# Calculate the mean delta across all states for each episode
+mean_delta_V_pi = np.mean(np.abs(V_track[1:] - V_track[:-1]), axis=1)
 
 new_fields = {'V': np.append(results_pi['V'],
                              [0]*99984),
               'pi': list(results_pi['pi'].values())+[0]*99984,
               'episode_rewards': results_pi['episode_rewards'],
+              'cumulative_sum': np.cumsum(results_pi['episode_rewards']),
               'average_episode_rewards': np.append(results_pi['average_episode_rewards'],
                                                   [0]*99999)}
+
 pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathpi+'/results_pi_final.csv')
+pd.DataFrame(data=np.trim_zeros(np.mean(V_track, axis=1), 'b')).to_csv(path_or_buf=pathpi+'MeanV.csv')
+pd.DataFrame(data=results_pi['vi_track']).to_csv(path_or_buf=pathpi+'/results_v_track.csv')
+pd.DataFrame(data=mean_delta_V_pi).to_csv(path_or_buf=pathpi+'/results_mean_delta_v.csv')
 
 ################# VALUE ITERATION ######################
 np.random.seed(seed)
 frozenlakeS.reset(seed=seed) 
 
-print(f"VI: gamma={fl_S_vi_gam_best}; theta={fl_S_vi_theta5_best}; iters={iters}")            
+#print(f"VI: gamma={fl_S_vi_gam_best}; theta={fl_S_vi_theta_best}; iters={iters}")            
 V, V_track, pi = Planner(P=frozenlakeS.P).value_iteration(n_iters=iters,
-                                                        gamma=fl_S_vi_gam_best,
-                                                        theta=fl_S_vi_theta5_best)
+                                                        gamma=0.999,
+                                                        theta=1e-5)
 episode_rewards = TestEnv.test_env(env=frozenlakeS, n_iters=iters, pi=pi)
 avg_ep_rewards = np.mean(episode_rewards)
 
@@ -358,10 +388,18 @@ results_vi = {'V': V,
 print("Avg. episode reward: ", avg_ep_rewards)
 print("###################\n")
 
+# Calculate the mean delta across all states for each sode
+mean_delta_V_vi = np.mean(np.abs(V_track[1:] - V_track[:-1]), axis=1)
+
 new_fields = {'V': np.append(results_vi['V'],
                              [0]*99984),
               'pi': list(results_vi['pi'].values())+[0]*99984,
               'episode_rewards': results_vi['episode_rewards'],
+              'cumulative_sum': np.cumsum(results_ql['episode_rewards']),
               'average_episode_rewards': np.append(results_vi['average_episode_rewards'],
                                                   [0]*99999)}
+
 pd.DataFrame(data=new_fields).to_csv(path_or_buf=pathvi+'/results_vi_final.csv')
+pd.DataFrame(data=np.trim_zeros(np.mean(V_track, axis=1), 'b')).to_csv(path_or_buf=pathvi+'MeanV.csv')
+pd.DataFrame(data=results_vi['vi_track']).to_csv(path_or_buf=pathvi+'/results_v_track.csv')
+pd.DataFrame(data=mean_delta_V_vi).to_csv(path_or_buf=pathvi+'/results_mean_delta_v.csv')

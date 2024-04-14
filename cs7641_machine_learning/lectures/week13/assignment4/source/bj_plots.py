@@ -9,9 +9,6 @@ np.random.seed(123)
 
 # check
 Plots.values_heat_map
-Plots.v_iters_plot
-Plots.get_policy_map
-Plots.plot_policy
 
 # FROM UTILITIES
 @add_to(MyCallbacks)
@@ -19,7 +16,8 @@ def on_episode(self, caller, episode):
     if episode % 1000 == 0:
     	print(" episode=", episode)
 
-def bj_policy_map(pi, V):
+def bj_policy_map(pi, V, blackjack_map_size):
+    
     # create actions dictionary and set map size
     blackjack_actions = {0: "S", 1: "H"}
     blackjack_map_size=(29, 10)
@@ -28,7 +26,7 @@ def bj_policy_map(pi, V):
     val_max, policy_map = Plots.get_policy_map(pi, V, blackjack_actions, blackjack_map_size)
 
     # plot policy map
-    title="Unedited\nBlackjack Policy Map"
+    title="Blackjack Policy Map"
     Plots.plot_policy(val_max, policy_map, blackjack_map_size, title)
 
     title = "New Blackjack Policy Map"
